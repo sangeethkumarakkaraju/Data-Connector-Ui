@@ -1,0 +1,19 @@
+<header class="data-header data-header--sticky" *ngIf="visible">
+    <div class="navbar-wrapper">
+        <div class="dataLogo float-left">
+            <a class="logo-wraper">
+                <img src="../../../../assets/logo.png"></a>
+        </div>
+        <div class="data-header-wrapper">
+
+            <button mat-button> Data Point </button>
+            <button mat-button (click)="btnClick()"> Data Connection
+
+            </button>
+            <button mat-button>Jobs
+            </button>
+
+        </div>
+    </div>
+</header>
+<router-outlet></router-outlet>

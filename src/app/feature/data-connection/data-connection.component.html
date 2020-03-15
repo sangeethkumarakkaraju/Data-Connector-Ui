@@ -1,0 +1,27 @@
+<div class="d-flex justify-content-center align-items-center">
+    <mat-card class="card">
+
+
+        <div class="row ">
+
+            <mat-form-field>
+                <mat-label>Favorite food</mat-label>
+                <mat-select>
+                    <mat-option *ngFor="let food of foods" [value]="food.value">
+                        {{food.viewValue}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+        </div>
+        <div class="row">
+            <mat-form-field>
+                <mat-label>Email</mat-label>
+                <input matInput placeholder="Ex. pat@example.com">
+            </mat-form-field>
+
+        </div>
+
+    </mat-card>
+
+</div>
