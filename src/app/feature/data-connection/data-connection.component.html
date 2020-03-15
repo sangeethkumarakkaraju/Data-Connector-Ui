@@ -5,10 +5,10 @@
         <div class="row ">
 
             <mat-form-field>
-                <mat-label>Favorite food</mat-label>
+                <mat-label>Type</mat-label>
                 <mat-select>
-                    <mat-option *ngFor="let food of foods" [value]="food.value">
-                        {{food.viewValue}}
+                    <mat-option *ngFor="let data of connectionType" [value]="data.value">
+                        {{data.viewValue}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
@@ -16,8 +16,8 @@
         </div>
         <div class="row">
             <mat-form-field>
-                <mat-label>Email</mat-label>
-                <input matInput placeholder="Ex. pat@example.com">
+                <mat-label>URL</mat-label>
+                <input matInput placeholder="http://....">
             </mat-form-field>
 
         </div>

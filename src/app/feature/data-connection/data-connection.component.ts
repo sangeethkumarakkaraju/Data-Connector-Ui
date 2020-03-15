@@ -11,10 +11,10 @@ export class DataConnectionComponent implements OnInit {
 
   ngOnInit() {
   }
-  foods: Food[] = [
-    { value: 'steak-0', viewValue: 'Sales Force' },
-    { value: 'pizza-1', viewValue: 'SAP' },
-    { value: 'tacos-2', viewValue: 'NoSQL' },
-    { value: 'tacos-2', viewValue: 'PID' }
+  connectionType = [
+    { value: 'sales Force', viewValue: 'Sales Force' },
+    { value: 'SAP', viewValue: 'SAP' },
+    { value: 'NoSQL', viewValue: 'NoSQL' },
+    { value: 'PID', viewValue: 'PID' }
   ];
 }
