@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DataConnectorService } from 'src/app/shared/dataconnector/data-connector.service';
 
 @Component({
   selector: 'app-data-connection',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DataConnectionComponent implements OnInit {
 
-  constructor() { }
+  constructor(private datconnectorService: DataConnectorService) { }
 
   ngOnInit() {
   }
@@ -17,4 +18,14 @@ export class DataConnectionComponent implements OnInit {
     { value: 'NoSQL', viewValue: 'NoSQL' },
     { value: 'PID', viewValue: 'PID' }
   ];
+  authorization = [
+    { value: 'tokaen', viewValue: 'Token' },
+    { value: 'userName', viewValue: 'User Name' }
+  ];
+
+  submit() {
+    this.datconnectorService.addDataconnector().subscribe((resp) => {
+      console.log(resp)
+    })
+  }
 }

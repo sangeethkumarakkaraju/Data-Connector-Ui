@@ -49,5 +49,7 @@ export class NavbarComponent implements OnInit {
     console.log('hi');
     this.router.navigate(['/data-connector']);
   };
-
+  btnSignOut = function () {
+    this.router.navigate(['/']);
+  };
 }

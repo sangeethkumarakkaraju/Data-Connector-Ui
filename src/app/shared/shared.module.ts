@@ -5,8 +5,10 @@ import { CustomComponent } from './layouts/custom/custom.component';
 import { NavbarComponent } from './layouts/navbar/navbar.component';
 import { FooterComponent } from './layouts/footer/footer.component';
 import { AppRoutingModule } from '../app-routing.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './material.module';
+import { HttpClientModule } from '@angular/common/http';
+import { CredentialsService } from '../credentials.service';
 
 
 
@@ -22,15 +24,18 @@ import { MaterialModule } from './material.module';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    MaterialModule
+    ReactiveFormsModule,
+    MaterialModule,
+    HttpClientModule
   ],
   exports: [
     DefaultComponent,
     CustomComponent,
     NavbarComponent,
     FooterComponent,
-    MaterialModule
+    MaterialModule,
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [CredentialsService],
 })
 export class SharedModule { }

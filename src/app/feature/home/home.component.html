@@ -9,32 +9,45 @@
             </div>
         </div>
         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 float-left">
-            <div class="center text-center ">
-                <mat-card>
-                    <mat-card-title class="mat-card-title">Login here</mat-card-title>
-                    <mat-card-content>
+            <div [formGroup]='loginForm'>
+                <div class="center text-center ">
+                    <mat-card>
+                        <mat-card-title class="mat-card-title">Login here</mat-card-title>
+                        <mat-card-content>
+                            <div>
+                                <mat-form-field appearance='outline'>
+                                    <mat-label>user Name</mat-label>
+                                    <input matInput formControlName='username'
+                                        [ngClass]="{'is-invalid': f.username.invalid && (f.username.dirty || f.username.touched) && f.username.errors }">
+                                    <mat-error *ngIf="f.username.invalid && (f.username.dirty || f.username.touched)">
+                                        <mat-error class="has-error" *ngIf="f.username.errors.required">User Name is
+                                            Required</mat-error>
 
-                        <mat-form-field appearance='outline'>
-                            <mat-label>user Name</mat-label>
-                            <input matInput>
-                        </mat-form-field>
-                        <br>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <mat-form-field appearance='outline'>
+                                <mat-label> Password</mat-label>
+                                <input matInput formControlName='password'
+                                    [ngClass]="{'is-invalid':f.password.invalid && (f.password.touched || f.password.dirty) && f.password.errors }">
+                                <mat-error *ngIf="f.password.invalid && (f.password.dirty || f.password.touched)">
+                                    <mat-error class="has-error" *ngIf="f.password.errors.required">Password is
+                                        Required</mat-error>
 
-                        <mat-form-field appearance='outline'>
-                            <mat-label> Password</mat-label>
-                            <input matInput>
-                        </mat-form-field>
+                                </mat-error>
+                            </mat-form-field>
 
-                    </mat-card-content>
+                        </mat-card-content>
 
-                    <button mat-stroked-button color="primary" (click)="navigateToDataConnector()">Submit</button><br />
-                    <div class="links">
-                        <span class="signUplinks"> <a href="#">Forgot Password</a></span>
-                        <span class="signUplinks"> <a href="#">Sign Up</a></span>
-                    </div>
-                </mat-card>
+                        <button mat-stroked-button color="primary" (click)="navigateToDataConnector()"
+                            [disabled]="f.invalid">Submit</button><br />
+                        <div class="links">
+                            <span class="signUplinks"> <a href="#">Forgot Password</a></span>
+                            <span class="signUplinks"> <a href="#">Sign Up</a></span>
+                        </div>
+                    </mat-card>
+                </div>
             </div>
-
 
         </div>
     </div>

@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { NavbarComponent } from './shared/layouts/navbar/navbar.component';
 import { DataConnectionComponent } from './feature/data-connection/data-connection.component';
 import { HomeComponent } from './feature/home/home.component';
+import { SchedulerComponent } from './feature/scheduler/scheduler.component';
 
 const routes: Routes = [
   {
@@ -12,6 +13,10 @@ const routes: Routes = [
   },
   {
     path: 'data-connector', component: DataConnectionComponent,
+    data: { shownavbar: true }
+  },
+  {
+    path: 'scheduler', component: SchedulerComponent,
     data: { shownavbar: true }
   }
 ];

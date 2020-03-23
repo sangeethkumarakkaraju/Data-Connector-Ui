@@ -8,6 +8,7 @@ import { SharedModule } from './shared/shared.module';
 import { DataConnectionComponent } from './feature/data-connection/data-connection.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
+import { SchedulerComponent } from './feature/scheduler/scheduler.component';
 
 
 @NgModule({
@@ -15,6 +16,7 @@ import { FormsModule } from '@angular/forms';
     DataConnectionComponent,
     AppComponent,
     HomeComponent,
+    SchedulerComponent,
 
   ],
   imports: [
