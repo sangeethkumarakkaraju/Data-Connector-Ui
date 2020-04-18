@@ -2,15 +2,15 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DataConnectionComponent } from './data-connection.component';
 
-describe('DataConnectionComponent', () => {
+describe('TablecomponentComponent', () => {
   let component: DataConnectionComponent;
   let fixture: ComponentFixture<DataConnectionComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DataConnectionComponent ]
+      declarations: [DataConnectionComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

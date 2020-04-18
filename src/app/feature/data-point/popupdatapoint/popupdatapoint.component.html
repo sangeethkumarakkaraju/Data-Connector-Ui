@@ -1,0 +1,136 @@
+<div class="d-flex justify-content-center">
+
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 px-0">
+
+
+        <div [formGroup]="datapointform"
+            class="row col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 justify-content-center">
+            <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-xs-12 ">
+                <h1 mat-dialog-title><span *ngIf="action !== 'Delete'"><strong> {{action}} Data Point</strong></span>
+                </h1>
+                <p class="justify-content0-center" *ngIf="action === 'Delete'">Are you sure You want to delete
+                    {{local_data.name}}?</p>
+                <div class="row">
+                    <mat-form-field *ngIf="action != 'Delete';">
+                        <mat-label>Data Point Name</mat-label>
+                        <input [(ngModel)]="local_data.name" matInput placeholder="Enter name" formControlName='name'>
+                        <mat-error
+                            *ngIf="datapointform.controls['name'].invalid && (datapointform.controls['name'].dirty || datapointform.controls['name'].touched)">
+                            <div *ngIf="datapointform.controls['name'].errors.required">
+
+                                Data Point Name is Required.
+                            </div>
+                        </mat-error>
+                    </mat-form-field>
+
+                </div>
+                <div class="row">
+                    <mat-form-field *ngIf="action != 'Delete';">
+                        <mat-label>Type</mat-label>
+                        <mat-select disableOptionCentering formControlName='type' [(ngModel)]="local_data.type"
+                            (selectionChange)="onSelection()">
+                            <mat-option value="salesforce">Sales Force</mat-option>
+                            <mat-option value="sap">SAP</mat-option>
+                            <!-- <mat-option value="nosql">NOSQL</mat-option>
+                            <mat-option value="pide">PIDE</mat-option> -->
+                        </mat-select>
+                        <!-- <ng-template #elseTemplate>
+                            Sure to delete <b>{{local_data.type}}</b>?
+                        </ng-template> -->
+                        <mat-error
+                            *ngIf="datapointform.controls['type'].invalid && (datapointform.controls['type'].dirty || datapointform.controls['type'].touched)">
+                            <div *ngIf="datapointform.controls['type'].errors.required">
+                                Type is Required.
+                            </div>
+                        </mat-error>
+                    </mat-form-field>
+
+                </div>
+                <div class="row" *ngIf="hidefields">
+                    <mat-form-field *ngIf="action != 'Delete';">
+                        <mat-label>Parameters</mat-label>
+                        <textarea matInput placeholder="Enter Parameters.." formControlName='param'
+                            [(ngModel)]="local_data.param"></textarea>
+                        <mat-error
+                            *ngIf="datapointform.controls['param'].invalid && (datapointform.controls['param'].dirty || datapointform.controls['param'].touched)"
+                            class="red">
+                            <div *ngIf="datapointform.controls['param'].errors.required">
+                                Parameters is Required.
+                            </div>
+                        </mat-error>
+                    </mat-form-field>
+
+                </div>
+                <div class=" row" *ngIf="hidefields">
+                    <mat-form-field *ngIf="action != 'Delete';">
+                        <mat-label>Authorization</mat-label>
+                        <textarea matInput placeholder="Enter Authorization" formControlName='auth'
+                            [(ngModel)]="local_data.auth"></textarea>
+                        <mat-error
+                            *ngIf="datapointform.controls['auth'].invalid && (datapointform.controls['auth'].dirty || datapointform.controls['auth'].touched)"
+                            class="red">
+                            <div *ngIf="datapointform.controls['auth'].errors.required">
+                                Authorization is Required.
+                            </div>
+                        </mat-error>
+                    </mat-form-field>
+
+                </div>
+                <div class="row" *ngIf="hidefields">
+                    <mat-form-field *ngIf="action != 'Delete';">
+                        <mat-label>Headers</mat-label>
+                        <textarea matInput placeholder="Enter Headers" formControlName='headers'
+                            [(ngModel)]="local_data.headers"></textarea>
+                        <mat-error
+                            *ngIf="datapointform.controls['headers'].invalid && (datapointform.controls['headers'].dirty || datapointform.controls['headers'].touched)"
+                            class="red">
+                            <div *ngIf="datapointform.controls['headers'].errors.required">
+                                Headers is Required.
+                            </div>
+                        </mat-error>
+                    </mat-form-field>
+
+                </div>
+                <div class=" row">
+                    <mat-form-field *ngIf="action != 'Delete';">
+                        <mat-label>URL</mat-label>
+                        <input [(ngModel)]="local_data.url" matInput placeholder="http://........"
+                            formControlName='url'>
+                        <mat-error
+                            *ngIf="datapointform.controls['url'].invalid && (datapointform.controls['url'].dirty || datapointform.controls['url'].touched)"
+                            class="red">
+                            <div *ngIf="datapointform.controls['url'].errors.required">
+                                Url is Required.
+                            </div>
+                        </mat-error>
+                    </mat-form-field>
+
+                </div>
+                <div class="row">
+                    <mat-form-field *ngIf="action != 'Delete';">
+                        <mat-label>InBound/OutBound</mat-label>
+                        <mat-select disableOptionCentering formControlName='InBound' [(ngModel)]="local_data.InBound">
+                            <mat-option value="Inbound">InBound</mat-option>
+                            <mat-option value="Outbound">OutBound</mat-option>
+                        </mat-select>
+                        <mat-error
+                            *ngIf="datapointform.controls['InBound'].invalid && (datapointform.controls['InBound'].dirty || datapointform.controls['InBound'].touched)"
+                            class="red">
+                            <div *ngIf="datapointform.controls['InBound'].errors.required">
+                                InBound/OutBound is Required.
+                            </div>
+                        </mat-error>
+                    </mat-form-field>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <button mat-button class="mr-2" mat-flat-button color="primary" (click)="doAction()">{{action}}</button>
+            <button mat-button class="ml-2" (click)="closeDialog()" mat-flat-button color="warn">Cancel</button>
+        </div>
+
+    </div>
+</div>

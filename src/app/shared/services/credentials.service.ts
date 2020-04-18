@@ -10,17 +10,21 @@ export class CredentialsService {
 
   constructor(private http: HttpClient
   ) { }
-  configUrl = "http://3.208.113.126:8000/sap/bc/srt/wsdl/flv_10002P111AD1/sdef_url/Z_READ_CUST1?sap-client=800'"
+  configUrl = "http://localhost/EzPet/authentication/login"
 
   // getConfig(val) {
   //   return this.http.post(this.configUrl);
   // }
 
 
-  addDataconnector(data: any): Observable<any> {
+  dologin(data: any): Observable<any> {
+    const reqdata = {
+      email: data.username,
+      password: data.password
+    }
     return this.http
-      .post(this.configUrl, {
-        headers: new HttpHeaders().set('Username', 'sreddy').set('Password', 'Data11'),
+      .post(this.configUrl, reqdata, {
+        headers: new HttpHeaders(),
       }).pipe(map(this.extractData), catchError(this.handleError));
   }
 

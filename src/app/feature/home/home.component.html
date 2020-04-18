@@ -1,4 +1,5 @@
 <section class="">
+
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 float-left">
             <div class="center text-center">
@@ -12,7 +13,7 @@
             <div [formGroup]='loginForm'>
                 <div class="center text-center ">
                     <mat-card>
-                        <mat-card-title class="mat-card-title">Login here</mat-card-title>
+                        <mat-card-title class="mat-card-title">Login </mat-card-title>
                         <mat-card-content>
                             <div>
                                 <mat-form-field appearance='outline'>
@@ -39,8 +40,11 @@
 
                         </mat-card-content>
 
-                        <button mat-stroked-button color="primary" (click)="navigateToDataConnector()"
-                            [disabled]="f.invalid">Submit</button><br />
+
+                        <button mat-button mat-flat-button color="primary" [disabled]="f.invalid"
+                            (click)="navigateToDataConnector()">Submit</button>
+
+                        <div class="errorMsg" *ngIf="showError">{{errorMsg}}</div>
                         <div class="links">
                             <span class="signUplinks"> <a href="#">Forgot Password</a></span>
                             <span class="signUplinks"> <a href="#">Sign Up</a></span>

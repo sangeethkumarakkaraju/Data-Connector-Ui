@@ -1,0 +1,88 @@
+<div class="d-flex justify-content-center">
+
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 px-0">
+
+
+        <div [formGroup]="datapointform"
+            class="row col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 justify-content-center">
+            <div class="col-xl-10 col-lg-10 col-md-10 col-sm-12 col-xs-12 ">
+                <h1 mat-dialog-title> <span *ngIf="action !== 'Delete'"><strong>{{action}} Data
+                            Connection</strong></span></h1>
+                <p class="justify-content-center" *ngIf="action === 'Delete'">Are you sure You want to delete
+                    {{local_data.name}}?</p>
+                <div class=" row col-xl-10 col-lg-10 col-md-10 col-sm-12 col-xs-12 ">
+                    <mat-form-field *ngIf=" action !='Delete'">
+                        <mat-label>Data Connection Name</mat-label>
+                        <input matInput placeholder="Enter Data Connection Name" formControlName='name'
+                            [(ngModel)]="local_data.name">
+
+                        <mat-error
+                            *ngIf="datapointform.controls['name'].invalid && (datapointform.controls['name'].dirty || datapointform.controls['name'].touched)">
+                            <div *ngIf="datapointform.controls['param'].errors.required">
+                                Data Connection Name is Required.
+                            </div>
+
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="row col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                    <div class="row col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+                        <mat-form-field *ngIf="action != 'Delete';">
+                            <mat-label>InBound </mat-label>
+                            <mat-select disableOptionCentering formControlName='datapointnames1'
+                                [(ngModel)]="local_data.inbound">
+                                <mat-option *ngFor="let datapointval of inbound" value="{{datapointval}}">
+                                    {{datapointval}}
+                                </mat-option>
+
+                            </mat-select>
+                            <mat-error
+                                *ngIf="datapointform.controls['datapointnames1'].invalid && (datapointform.controls['datapointnames1'].dirty || datapointform.controls['datapointnames1'].touched)">
+                                InBound Name is Required.
+                            </mat-error>
+                        </mat-form-field>
+
+                    </div>
+                    <div class="row col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+                        <mat-form-field *ngIf="action != 'Delete';">
+                            <mat-label> OutBound</mat-label>
+                            <mat-select disableOptionCentering formControlName='datapointnames2'
+                                [(ngModel)]="local_data.outbound">
+                                <mat-option *ngFor="let datapointval of outbound" value="{{datapointval}}">
+                                    {{datapointval}}
+
+                                </mat-option>
+
+                            </mat-select>
+
+
+                            <mat-error
+                                *ngIf="datapointform.controls['datapointnames2'].invalid && (datapointform.controls['datapointnames2'].dirty || datapointform.controls['datapointnames2'].touched)">
+                                OutBound Name is Required.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+
+                    <div class="row justify-content-center col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <button mat-button class="mr-2" mat-flat-button color="primary"
+                            (click)="doAction()">{{action}}</button>
+                        <button mat-button class="ml-2" (click)="closeDialog()" mat-flat-button
+                            color="warn">Cancel</button>
+                    </div>
+
+
+
+
+                </div>
+
+
+
+
+            </div>
+        </div>
+
+
+
+    </div>
+</div>

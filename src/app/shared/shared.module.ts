@@ -8,7 +8,8 @@ import { AppRoutingModule } from '../app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './material.module';
 import { HttpClientModule } from '@angular/common/http';
-import { CredentialsService } from '../credentials.service';
+import { CredentialsService } from './services/credentials.service';
+import { DataService } from './services/shared.service';
 
 
 
@@ -34,8 +35,9 @@ import { CredentialsService } from '../credentials.service';
     NavbarComponent,
     FooterComponent,
     MaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+
   ],
-  providers: [CredentialsService],
+  providers: [CredentialsService, DataService],
 })
 export class SharedModule { }

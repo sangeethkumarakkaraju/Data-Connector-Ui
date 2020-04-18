@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { ValidationService } from 'src/app/shared/services/validation.service';
+import { CredentialsService } from 'src/app/shared/services/credentials.service';
 
 @Component({
   selector: 'app-home',
@@ -9,13 +11,16 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  errorMsg: string;
   // username: FormControl;
   // password: FormControl;
 
   constructor(private router: Router, private httpClient: HttpClient,
-    private fb: FormBuilder) { }
+    private Validationservice: ValidationService,
+    private fb: FormBuilder, private credentialsservice: CredentialsService) { }
   loginForm: FormGroup;
 
+  showError: boolean = false;
   ngOnInit() {
     this.loginForm = this.fb.group({
       username: ['', [Validators.required]],
@@ -28,11 +33,26 @@ export class HomeComponent implements OnInit {
   get f() { return this.loginForm.controls; }
 
   navigateToDataConnector() {
-    //this.router.navigate(['/data-connector'])
-    this.httpClient.get('./assets/credentials.json').subscribe((res) => {
-      console.log(res);
+    // this.router.navigate(['/data-point'])
+    // this.httpClient.get('./assets/credentials.json').subscribe((res) => {
+    //   console.log(res);
 
-    });
+    // });
+    if (this.loginForm.valid) {
+      this.showError = false
+      this.credentialsservice.dologin(this.loginForm.value).subscribe((res) => {
+        localStorage.setItem('data', res.data.last_name)
+        this.router.navigate(['/data-point'])
+      }, (err) => {
+        this.showError = true;
+        this.errorMsg = "Login Failed, Please try again";
+      })
+    } else {
+      this.Validationservice.markAllFormFieldsAsTouched(this.loginForm)
+    }
+
+
+
 
 
 

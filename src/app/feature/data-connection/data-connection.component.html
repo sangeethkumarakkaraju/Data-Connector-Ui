@@ -1,60 +1,232 @@
-<div class="d-flex justify-content-center align-items-center h-100  ">
-    <mat-card>
-        <div class="row">
-            <mat-form-field appearance="fill">
-                <mat-label>Type</mat-label>
-                <mat-select disableOptionCentering>
-                    <mat-option value="salesforce">Sales Force</mat-option>
-                    <mat-option value="sap">SAP</mat-option>
-                    <mat-option value="nosql">NOSQL</mat-option>
-                    <mat-option value="pide">PIDE</mat-option>
-                </mat-select>
-            </mat-form-field>
+<div class="col-sm-12 col-xl-12 col-lg-12 col-md-12 col-xs-12">
+    <div class="col-lg-10 col-md-10 col-xs-10 mx-auto">
+
+
+        <div class="row justify-content-center">
         </div>
+
         <div class="row">
-            <mat-form-field appearance="fill">
-                <mat-label>URL</mat-label>
-                <input matInput placeholder="http://........">
-            </mat-form-field>
+            <div class="col-12 col-xl-12 col-lg-12 col-md-12 col-xs-12 mt-3 ">
+
+                <p class="parama">List of Data Connections</p>
+                <img src="../../../assets/excel-download.png" class="float-right mr-2 exportIcon"
+                    (click)="exportTable()">
+                <i class="float-right mr-2 fa fa-plus addIcon" (click)="openDialog('Add',{})"></i>
+            </div>
         </div>
-        <div class="row">
-            <mat-form-field appearance="fill">
-                <mat-label>Authorization</mat-label>
-                <mat-select disableOptionCentering>
-                    <mat-option value="token">Token</mat-option>
-                    <mat-option value="username">User Name</mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-        <div class="row">
-            <mat-card style="margin-right:10px;">
-                <form class="example-form">
-                    <mat-form-field class="example-full-width">
-                        <mat-label>Source Field</mat-label>
-                        <input matInput placeholder="Enter Source Field ">
+
+        <!-- <table mat-table [dataSource]="dataSource" matSort class="my-table"> -->
+        <table id="dataconnectTable" mat-table [dataSource]="dataSource" matSort #mytable class="customdatatable">
+
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef>
+                    <div class="d-flex">
+                        <span mat-sort-header (click)="sorted()"> S.NO</span>
+                    </div>
+                    <mat-form-field appearance="outline">
+                        <input matInput class="form-field" placeholder="Filter..."
+                            (keyup)="applyFilter($event.target.value)" (focus)="setupFilter('id')">
                     </mat-form-field>
 
-                    <mat-form-field class="example-full-width">
-                        <mat-label>Destination Field</mat-label>
-                        <input matInput placeholder="Enter Destination Field">
-                    </mat-form-field>
-                </form>
-            </mat-card>
-            <mat-card>
-                <form class="example-form">
-                    <mat-form-field class="example-full-width">
-                        <mat-label>User Name</mat-label>
-                        <input matInput placeholder="Enter User Name ">
+                </th>
+                <td mat-cell *matCellDef="let element ; let i = index;"> {{i+1}} </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef>
+                    <div class="d-flex">
+                        <span mat-sort-header (click)="sorted()"> Name</span>
+                    </div>
+
+                    <mat-form-field appearance="outline">
+                        <input matInput class="form-field" placeholder="Filter..."
+                            (keyup)="applyFilter($event.target.value)" (focus)="setupFilter('name')">
                     </mat-form-field>
 
-                    <mat-form-field class="example-full-width">
-                        <mat-label>Password</mat-label>
-                        <input matInput placeholder="Enter Password">
+                </th>
+                <td mat-cell *matCellDef="let element">
+                    <p class="link" (click)="openDialog('Update',element)">{{element.name}}
+
+                    </p>
+                </td>
+            </ng-container>
+            <!-- Name Column -->
+            <!-- Name Column -->
+            <ng-container matColumnDef="inbound">
+                <th mat-header-cell *matHeaderCellDef>
+                    <div class="d-flex">
+                        <span mat-sort-header (click)="sorted()"> InBound</span>
+                    </div>
+                    <mat-form-field appearance="outline">
+                        <input matInput class="form-field" placeholder="Filter..."
+                            (keyup)="applyFilter($event.target.value)" (focus)="setupFilter('inbound')">
                     </mat-form-field>
-                </form>
-            </mat-card>
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.inbound}} </td>
+            </ng-container>
+            <ng-container matColumnDef="outbound">
+                <th mat-header-cell *matHeaderCellDef>
+                    <div class="d-flex">
+                        <span mat-sort-header (click)="sorted()"> OutBound</span>
+                    </div>
+                    <mat-form-field appearance="outline">
+                        <input matInput class="form-field" placeholder="Filter..."
+                            (keyup)="applyFilter($event.target.value)" (focus)="setupFilter('outbound')">
+                    </mat-form-field>
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.outbound}} </td>
+            </ng-container>
+
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="createdby">
+                <th mat-header-cell *matHeaderCellDef>
+                    <div class="d-flex">
+                        <span mat-sort-header (click)="sorted()"> Created By</span>
+                    </div>
+                    <mat-form-field appearance="outline">
+                        <input matInput class="form-field" placeholder="Filter..."
+                            (keyup)="applyFilter($event.target.value)" (focus)="setupFilter('createdby')">
+                    </mat-form-field>
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.createdby}}</td>
+            </ng-container>
+
+
+
+
+            <ng-container matColumnDef="createdon">
+                <th mat-header-cell *matHeaderCellDef>
+                    <div class="d-flex">
+                        <span mat-sort-header (click)="sorted()"> Created On</span>
+                    </div>
+                    <mat-form-field appearance="outline">
+                        <input matInput class="form-field" [matMenuTriggerFor]="menu1" placeholder="Filter..."
+                            (keyup)="applyFilter($event.target.value)" (focus)="setupFilter('createdon')">
+                    </mat-form-field>
+                    <mat-menu #menu1 class="custondrpdwn">
+                        <ng-template matMenuContent>
+                            <div class="date-block" [formGroup]="filterForm">
+                                <div class="date-block__list">
+                                    <mat-form-field>
+                                        <input matInput [matDatepicker]="fromDate" placeholder="From Date"
+                                            formControlName="fromDate1">
+                                        <mat-datepicker-toggle matSuffix [for]="fromDate"></mat-datepicker-toggle>
+                                        <mat-datepicker #fromDate></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                                <div class="date-block__list">
+                                    <mat-form-field>
+                                        <input matInput [matDatepicker]="toDate" placeholder="To Date"
+                                            formControlName="toDate1">
+                                        <mat-datepicker-toggle matSuffix [for]="toDate"></mat-datepicker-toggle>
+                                        <mat-datepicker #toDate></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                                <button mat-button color="primary" class="primary"
+                                    (click)="setUpDateFilter1('updatedon')">Submit</button>
+                            </div>
+                        </ng-template>
+                    </mat-menu>
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.createdon | date: 'short'}}</td>
+            </ng-container>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <ng-container matColumnDef="lastchangedby">
+                <th mat-header-cell *matHeaderCellDef>
+                    <div class="d-flex">
+                        <span mat-sort-header (click)="sorted()">Last Changed By</span>
+                    </div>
+                    <mat-form-field appearance="outline">
+                        <input matInput class="form-field" placeholder="Filter..."
+                            (keyup)="applyFilter($event.target.value)" (focus)="setupFilter('lastchangedby')">
+                    </mat-form-field>
+                </th>
+                <td mat-cell *matCellDef="let element">{{element.lastchangedby}} </td>
+            </ng-container>
+
+
+
+
+            <ng-container matColumnDef="lastchangedon">
+                <th mat-header-cell *matHeaderCellDef>
+                    <div class="d-flex">
+                        <span mat-sort-header (click)="sorted()"> Last Changed On</span>
+                    </div>
+                    <mat-form-field appearance="outline">
+                        <input matInput class="form-field" [matMenuTriggerFor]="menu" placeholder="Filter..."
+                            (keyup)="applyFilter($event.target.value)" (focus)="setupFilter('lastchangedon')">
+                    </mat-form-field>
+                    <mat-menu #menu class="custondrpdwn">
+                        <ng-template matMenuContent>
+                            <div class="date-block" [formGroup]="filterForm">
+                                <div class="date-block__list">
+                                    <mat-form-field>
+                                        <input matInput [matDatepicker]="fromDate" placeholder="From Date"
+                                            formControlName="fromDate">
+                                        <mat-datepicker-toggle matSuffix [for]="fromDate"></mat-datepicker-toggle>
+                                        <mat-datepicker #fromDate></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                                <div class="date-block__list">
+                                    <mat-form-field>
+                                        <input matInput [matDatepicker]="toDate" placeholder="To Date"
+                                            formControlName="toDate">
+                                        <mat-datepicker-toggle matSuffix [for]="toDate"></mat-datepicker-toggle>
+                                        <mat-datepicker #toDate></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                                <button mat-button color="primary" class="primary"
+                                    (click)="setUpDateFilter('updatedon')">Submit</button>
+                            </div>
+                        </ng-template>
+                    </mat-menu>
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.lastchangedon | date: 'short'}}</td>
+            </ng-container>
+
+
+
+
+
+
+            <!-- Action Column -->
+            <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef> </th>
+                <td mat-cell *matCellDef="let element" class="action-link">
+
+                    <!-- <button mat-icon-button color="accent" (click)="openDialog('Update',element)">
+                    <mat-icon aria-label="Edit">edit</mat-icon>
+                </button> | -->
+                    <button mat-icon-button [ngStyle]="{'color':'#B22222'}" (click)="openDialog('Delete',element)">
+                        <mat-icon aria-label="Delete">delete</mat-icon>
+                    </button>
+
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <div *ngIf="dataArray.length <= 0" class="no-records">
+            <p>No Records Found</p>
         </div>
-        <button mat-stroked-button color="primary" (click)="submit()">Submit</button>
 
-    </mat-card>
+    </div>
+
 </div>
