@@ -1,0 +1,150 @@
+<div class="col-12 col-xl-12 col-lg-12 col-md-12 col-xs-12  ">
+
+    <div class="col-lg-10 col-md-10 col-xs-10 mx-auto ">
+
+
+        <div class="col-lg-10 col-md-10 col-xs-10 mx-auto">
+
+            <div id="output"></div>
+            <div class="row justify-content-center">
+            </div>
+            <div class="row">
+                <div class="col-12 col-xl-12 col-lg-12 col-md-12 col-xs-12 mt-3 ">
+
+                    <p class="parama">Job Summary</p>
+                    <img src="../../../assets/excel-download.png" class="float-right mr-2 exportIcon"
+                        (click)="exportTable()">
+                </div>
+            </div>
+        </div>
+
+        <table id="jobsscheduler" mat-table [dataSource]="dataSource" matSort #mytable class="customdatatable"
+            matSortDirection="asc" matSortDisableClear>
+
+
+            <!--- Note that these columns can be defined in any order.
+                The actual rendered columns are set as a property on the row definition" -->
+
+            <!-- Id Column -->
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef>
+                    <div class="d-flex">
+                        <span mat-sort-header (click)="sorted()"> S.NO</span>
+                    </div>
+                    <mat-form-field appearance="outline">
+                        <input matInput class="form-field" placeholder="Filter..."
+                            (keyup)="applyFilter($event.target.value)" (focus)="setupFilter('id')">
+                    </mat-form-field>
+                </th>
+                <td mat-cell *matCellDef="let element ; let i = index;"> {{i+1}} </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="jobname">
+                <th mat-header-cell *matHeaderCellDef>
+                    <div class="d-flex">
+                        <span mat-sort-header (click)="sorted()"> Job Name</span>
+                    </div>
+                    <mat-form-field appearance="outline">
+                        <input matInput class="form-field" placeholder="Filter..."
+                            (keyup)="applyFilter($event.target.value)" (focus)="setupFilter('jobname')">
+                    </mat-form-field>
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.jobname}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Starttime">
+                <th mat-header-cell *matHeaderCellDef>
+                    <div class="d-flex">
+                        <span mat-sort-header (click)="sorted()"> Start Time</span>
+                    </div>
+                    <mat-form-field appearance="outline">
+                        <input matInput class="form-field" placeholder="Filter..."
+                            (keyup)="applyFilter($event.target.value)" (focus)="setupFilter('Starttime')">
+                    </mat-form-field>
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.Starttime | date: 'shortDate'}} </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="endtime">
+                <th mat-header-cell *matHeaderCellDef>
+                    <div class="d-flex">
+                        <span mat-sort-header (click)="sorted()"> End Time</span>
+                    </div>
+                    <mat-form-field appearance="outline">
+                        <input matInput class="form-field" placeholder="Filter..."
+                            (keyup)="applyFilter($event.target.value)" (focus)="setupFilter('endtime')">
+                    </mat-form-field>
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.endtime | date: 'shortDate'}} </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="lastrunon">
+                <th mat-header-cell *matHeaderCellDef>
+                    <div class="d-flex">
+                        <span mat-sort-header (click)="sorted()">Last Run On</span>
+                    </div>
+
+                    <mat-form-field appearance="outline">
+                        <input matInput class="form-field" placeholder="Filter..."
+                            (keyup)="applyFilter($event.target.value)" (focus)="setupFilter('lastrunon')">
+                    </mat-form-field>
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.lastrunon | date: 'shortDate'}} </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="duration">
+                <th mat-header-cell *matHeaderCellDef>
+                    <div class="d-flex">
+                        <span mat-sort-header (click)="sorted()"> Duration</span>
+                    </div>
+                    <mat-form-field appearance="outline">
+                        <input matInput class="form-field" placeholder="Filter..."
+                            (keyup)="applyFilter($event.target.value)" (focus)="setupFilter('duration')">
+                    </mat-form-field>
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.duration | date: 'shortDate'}} </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="createdby">
+                <th mat-header-cell *matHeaderCellDef>
+                    <div class="d-flex">
+                        <span mat-sort-header (click)="sorted()"> Created By</span>
+                    </div>
+                    <mat-form-field appearance="outline">
+                        <input matInput class="form-field" placeholder="Filter..."
+                            (keyup)="applyFilter($event.target.value)" (focus)="setupFilter('createdby')">
+                    </mat-form-field>
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.createdby }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef>
+                    <div class="d-flex">
+                        <span> Status</span>
+                    </div>
+                    <mat-form-field appearance="outline">
+                        <input matInput class="form-field" placeholder="Filter..."
+                            (keyup)="applyFilter($event.target.value)" (focus)="setupFilter('status')">
+                    </mat-form-field>
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.status }}</td>
+            </ng-container>
+
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        </table>
+        <div class="no-records">
+            <p>No Records Found</p>
+        </div>
+        <!-- <mat-paginator [pageSizeOptions]="[3, 6, 9]" showFirstLastButtons></mat-paginator> -->
+
+    </div>
+</div>

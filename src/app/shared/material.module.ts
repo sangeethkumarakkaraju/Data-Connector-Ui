@@ -1,12 +1,28 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatSliderModule, MatInputModule, MatFormFieldModule, MatCardModule, MatButtonModule, MatIconModule, MatDialogModule, MatExpansionModule, MatStepperModule, MatAutocompleteModule, MatGridListModule, MatSelectModule, MatCheckboxModule, MatTooltipModule, MatMenuModule } from '@angular/material';
+import { MatSliderModule, MatInputModule, MatFormFieldModule, MatCardModule, MatButtonModule, MatIconModule, MatDialogModule, MatExpansionModule, MatStepperModule, MatAutocompleteModule, MatGridListModule, MatSelectModule, MatCheckboxModule, MatTooltipModule, MatMenuModule, MatError, MatPaginatorModule, MatToolbarModule, MatRadioModule } from '@angular/material';
+import { MatSortModule } from '@angular/material/sort'
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
+import { MatTableModule } from '@angular/material/table';
+import { TableModule } from 'primeng/table';
+import { CalendarModule } from 'primeng/calendar';
+import { CdkTableModule } from '@angular/cdk/table';
+import { MatTabsModule } from '@angular/material/tabs';
+import { CheckboxModule } from 'primeng/checkbox';
+// import { MatListOption, MatListModule, MatSelectionList, MatSelectionListChange } from '@angular/material/list';
+
 
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
+    MatCheckboxModule,
+    MatRadioModule,
+    CalendarModule,
+    CheckboxModule,
+    MatDatepickerModule,
     MatSliderModule,
     MatInputModule,
     MatFormFieldModule,
@@ -20,10 +36,26 @@ import { MatSliderModule, MatInputModule, MatFormFieldModule, MatCardModule, Mat
     MatAutocompleteModule,
     MatGridListModule,
     MatSelectModule,
-    MatCheckboxModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatTableModule,
+    TableModule,
+    CdkTableModule,
+    MatPaginatorModule,
+    MatToolbarModule,
+    MatTabsModule,
+    MatSortModule
+
+
+
   ],
   exports: [
+    MatCheckboxModule,
+    MatDatepickerModule,
+    MatRadioModule,
+    CalendarModule,
+    CheckboxModule,
     MatSliderModule,
     MatInputModule,
     MatFormFieldModule,
@@ -37,8 +69,16 @@ import { MatSliderModule, MatInputModule, MatFormFieldModule, MatCardModule, Mat
     MatAutocompleteModule,
     MatGridListModule,
     MatSelectModule,
-    MatCheckboxModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatTableModule,
+    TableModule,
+    CdkTableModule,
+    MatPaginatorModule,
+    MatToolbarModule,
+    MatTabsModule,
+    MatSortModule
 
 
   ]

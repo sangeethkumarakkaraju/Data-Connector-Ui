@@ -1,0 +1,122 @@
+
+table {
+  width:100%;
+     border:1px solid #08c;
+     border-collapse: collapse;
+    thead{
+        background: #08c;
+        color: #fff;
+        text-align: center;
+        } 
+        th, td{
+            padding:10px 20px;
+             border-right: 1px solid #ccc;
+             text-transform: capitalize;
+        }
+        input, select {  
+            background: transparent;
+    outline: 0;
+    width:100%;
+    border: 1px solid #000;}
+    tr:nth-child(even) {background: #f2f2f2}
+    tr:nth-child(odd) {background: #fafafa}
+}
+
+
+ .mat-form-field-outline{
+color:#000;
+ }
+
+ 
+.center{
+    margin: 0px;
+    padding: 0px;
+     text-align: -webkit-center;
+}
+.auth-token{
+    float: right;
+    margin-right: 70px;
+    padding: 0px;
+}
+ 
+
+.mat-form-field {
+    width: 100%;
+    display: inline-block;
+    position: relative;
+    text-align: left;
+}
+
+
+button {
+    background: transparent;
+    border: 0;
+    outline: none;
+    float: right;
+    font-size: 20px;
+}
+ 
+
+.defaultWrapper {
+    background: #fff;
+	margin:20px 0;
+}
+
+  .mat-stepper-horizontal{
+      width:100%;
+  }
+  ::ng-deep .mat-horizontal-stepper-header{
+    pointer-events: none !important;
+}
+ .mat-step-header .mat-step-icon-selected {
+    background-color: var(--ion-color-primary);
+  }
+  .mat-step-header.cdk-keyboard-focused, .mat-step-header.cdk-program-focused, .mat-step-header:hover {
+    background-color: #fff;
+}
+
+.mat-form-field {
+    /* display: inline-block; */
+    /* position: relative; */
+    /* text-align: left; */
+     padding: 0 10px;
+}
+
+
+.customBox{
+    text-align: center;
+    margin: 5px auto;
+}
+.cdk-overlay-pane.my-dialog {
+  position: relative!important;
+}
+.close.mat-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 5px;
+  line-height: 14px;
+  min-width: auto;
+  background: transparent !important;
+  color:#000;
+  float: right;
+}
+
+.ui-g-4 {
+    width: 49.3333%;
+}
+.mat-checkbox{
+    width: 32%;
+    float: left;
+}
+.mat-radio-button{
+    display: block;
+}
+.custmmrgn{
+    margin:20px auto !important;
+}
+ .ui-datepicker {
+z-index: 100000 !important;
+}
+
+

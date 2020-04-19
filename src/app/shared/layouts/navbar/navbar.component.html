@@ -6,14 +6,23 @@
         </div>
         <div class="data-header-wrapper">
 
-            <button mat-button> Data Point </button>
-            <button mat-button (click)="btnClick()"> Data Connection
+            <button mat-button (click)="navigateToDatapoint(); setActive('btn1')" [class.active]="isActive('btn1')">
+                Data Point </button>
+            <button mat-button (click)="navigateToDataconnection() ; setActive('btn2')"
+                [class.active]="isActive('btn2')"> Data Connection </button>
+
+            <button mat-button (click)="navigateToScheduler() ;setActive('btn3')" [class.active]="isActive('btn3')">
+                Jobs Scheduler
 
             </button>
-            <button mat-button>Jobs
-            </button>
+            <button mat-button (click)="navigateToJobhistory() ;setActive('btn4')"
+                [class.active]="isActive('btn4')">Jobs History </button>
+            <button class="float-right" mat-button (click)='btnSignOut()'> {{ userprofile }}
+                <span style="margin-left:30px;" *ngIf="userprofile">Sign Out </span></button>
+
 
         </div>
+
     </div>
 </header>
 <router-outlet></router-outlet>

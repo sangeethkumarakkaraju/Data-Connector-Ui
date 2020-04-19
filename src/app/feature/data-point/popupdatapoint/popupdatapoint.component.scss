@@ -1,0 +1,36 @@
+ 
+ 
+
+ 
+
+
+ 
+
+.mat-form-field {
+    width: 100%;
+    display: inline-block;
+    position: relative;
+    text-align: left;
+}
+
+
+button {
+    background: transparent;
+    border: 0;
+    outline: none;
+    float: right;
+    font-size: 20px;
+}
+ 
+
+.defaultWrapper {
+    background: #fff;
+	margin:20px 0;
+}
+mat-horizontal-stepper{
+    width: 100%;;
+}
+  .red{
+      color: red;
+    font-size: 14px;
+  }

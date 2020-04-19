@@ -10,6 +10,9 @@ import { filter, map, mergeMap } from 'rxjs/operators';
 })
 export class NavbarComponent implements OnInit {
   visible: boolean;
+  userprofile: string;
+  activeButton: any;
+
   constructor(private router: Router, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
@@ -32,6 +35,9 @@ export class NavbarComponent implements OnInit {
         console.log(event);
         this.showToolbar(event.shownavbar); // show the toolbar?
       });
+    if (localStorage.getItem('data')) {
+      this.userprofile = localStorage.getItem('data')
+    }
   }
 
   showToolbar(event) {
@@ -45,9 +51,30 @@ export class NavbarComponent implements OnInit {
   }
 
 
-  btnClick = function () {
-    console.log('hi');
-    this.router.navigate(['/data-connector']);
+  navigateToDatapoint() {
+    // console.log('hi');
+    this.router.navigate(['/data-point']);
   };
 
+  btnSignOut = function () {
+    this.router.navigate(['/']);
+    localStorage.clear();
+  };
+  navigateToDataconnection() {
+    this.router.navigate(['/data-connector'])
+  }
+  navigateToScheduler() {
+    this.router.navigate(['/jobs-scheduler']);
+  }
+  navigateToJobhistory() {
+    this.router.navigate(['/job-history']);
+
+  }
+
+  setActive(buttonName) {
+    this.activeButton = buttonName;
+  }
+  isActive(buttonName) {
+    return this.activeButton === buttonName;
+  }
 }
