@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { ENV_CONFIG } from 'src/app/env.config';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,8 @@ export class CredentialsService {
 
   constructor(private http: HttpClient
   ) { }
-  configUrl = "http://localhost/EzPet/authentication/login"
+  // configUrl = "http://localhost/EzPet/authentication/login"
+  configUrl = ENV_CONFIG.API_URLS.LOGIN_URL;
 
   // getConfig(val) {
   //   return this.http.post(this.configUrl);
