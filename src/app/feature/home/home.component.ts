@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
   errorMsg: string;
   // username: FormControl;
   // password: FormControl;
-
+  hide: boolean = true;
   constructor(private router: Router, private httpClient: HttpClient,
     private Validationservice: ValidationService,
     private fb: FormBuilder, private credentialsservice: CredentialsService) { }
