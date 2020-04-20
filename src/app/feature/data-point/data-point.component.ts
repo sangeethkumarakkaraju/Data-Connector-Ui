@@ -134,9 +134,18 @@ export class DataPointComponent implements OnInit {
     });
     // this.dataSource = new MatTableDataSource<PeriodicElement>(this.dataArray);
   }
-  resetForm1() {
-    this.filterForm.reset()
+  reset() {
+    this.filterForm.controls.fromDate.setValue('');
+    this.filterForm.controls.toDate.setValue('');
+    this.dataSource.filter = '';
+
   }
+  resetForm1() {
+    this.filterForm.controls.fromDate1.setValue('');
+    this.filterForm.controls.toDate1.setValue('');
+    this.dataSource.filter = ''
+  }
+
   getDataPoints() {
     this.dataArray = [];
     this.getservice.getDatapoints().subscribe((res) => {

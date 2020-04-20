@@ -76,6 +76,7 @@
                                 </div>
                                 <button mat-button color="primary" class="primary"
                                     (click)="setUpDateFilter1('updatedon')">Submit</button>
+                                <button mat-button color="primary" class="primary" (click)="resetForm1()">Reset</button>
                             </div>
                         </ng-template>
                     </mat-menu>
@@ -116,6 +117,7 @@
                                 </div>
                                 <button mat-button color="primary" class="primary"
                                     (click)="setUpDateFilter('updatedon')">Submit</button>
+                                <button mat-button color="primary" class="primary" (click)="resetForm()">Reset</button>
                             </div>
                         </ng-template>
                     </mat-menu>
@@ -201,7 +203,7 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
         </table>
-        <div *ngIf="dataSource.length === 0" class="no-records">
+        <div *ngIf="dataSource.data.length === 0" class="no-records">
             <p>No Records Found</p>
         </div>
         <!-- <mat-paginator [pageSizeOptions]="[3, 6, 9]" showFirstLastButtons></mat-paginator> -->
