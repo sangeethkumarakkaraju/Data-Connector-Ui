@@ -116,8 +116,9 @@
                                 </div>
                                 <button mat-button color="primary" class="primary"
                                     (click)="setUpDateFilter1('updatedon')">Submit</button>
+                                <button mat-button color="primary" class="primary" (click)="resetForm1()">Reset</button>
 
-                                <button mat-raised-button (click)="resetForm()">Reset</button>
+
 
                             </div>
                         </ng-template>
@@ -171,7 +172,8 @@
                                 </div>
                                 <button mat-button color="primary" class="primary"
                                     (click)="setUpDateFilter('updatedon')">Submit</button>
-                                <button mat-raised-button (click)="resetForm()">Reset</button>
+                                <button mat-button color="primary" class="primary" (click)="reset()">Reset</button>
+
 
                             </div>
                         </ng-template>
@@ -196,7 +198,7 @@
 
         </table>
 
-        <div *ngIf="dataSource.length === 0" class="no-records">
+        <div *ngIf="dataSource.data.length === 0" class="no-records">
             <p>No Records Found</p>
         </div>
 

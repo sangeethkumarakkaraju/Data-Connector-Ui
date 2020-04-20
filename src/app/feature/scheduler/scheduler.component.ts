@@ -154,7 +154,17 @@ export class SchedulerComponent implements OnInit {
 
     });
   }
+  reset() {
+    this.filterForm.controls.fromDate.setValue('');
+    this.filterForm.controls.toDate.setValue('');
+    this.dataSource.filter = '';
 
+  }
+  resetForm1() {
+    this.filterForm.controls.fromDate1.setValue('');
+    this.filterForm.controls.toDate1.setValue('');
+    this.dataSource.filter = ''
+  }
   openDialog(action, obj): void {
     obj.action = action;
     const dialogRef = this.dialog.open(PopupschedulerComponent, {
