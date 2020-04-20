@@ -29,8 +29,11 @@
                             </div>
                             <mat-form-field appearance='outline'>
                                 <mat-label> Password</mat-label>
-                                <input matInput formControlName='password'
+                                <input matInput formControlName='password' [type]="hide ? 'password' : 'text'"
                                     [ngClass]="{'is-invalid':f.password.invalid && (f.password.touched || f.password.dirty) && f.password.errors }">
+                                <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}
+                                </mat-icon>
+
                                 <mat-error *ngIf="f.password.invalid && (f.password.dirty || f.password.touched)">
                                     <mat-error class="has-error" *ngIf="f.password.errors.required">Password is
                                         Required</mat-error>
