@@ -4,7 +4,7 @@ import { environment } from '../environments/environment';
 // const DEV_ENV_CONFIG = {
 const DEV_ENV_CONFIG = {
   'API_URLS': {
-    'DATA_CONNECTION': 'http://localhost/api-dataconnector/V1/dataconnectorApi/',
+    'DATA_CONNECTION': 'http://ec2-34-228-33-0.compute-1.amazonaws.com/DataConnector/index.php/DataConnectAPI',
     'LOGIN_URL': 'http://ec2-34-228-33-0.compute-1.amazonaws.com/DataConnector/index.php/DataConnectAPI/login'
   },
 
@@ -13,7 +13,7 @@ const DEV_ENV_CONFIG = {
 
 const PROD_ENV_CONFIG = {
   'API_URLS': {
-    'DATA_CONNECTION': '/api-dataconnector/V1/dataconnectorApi/',
+    'DATA_CONNECTION': 'http://ec2-34-228-33-0.compute-1.amazonaws.com/DataConnector/index.php/DataConnectAPI',
     'LOGIN_URL': 'http://ec2-34-228-33-0.compute-1.amazonaws.com/DataConnector/index.php/DataConnectAPI/login'
   }
 };

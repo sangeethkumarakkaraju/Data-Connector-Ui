@@ -1,6 +1,7 @@
 import { Component, OnInit, Optional, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
+import { ValidationService } from 'src/app/shared/services/validation.service';
 
 export interface UsersData {
   name: string;
@@ -16,7 +17,7 @@ export class PopupdataConnection implements OnInit {
 
 
 
-  datapointform: FormGroup;
+  dataconnectionform: FormGroup;
   secondFormGroup: FormGroup;
 
   filteredvalues: any = [];
@@ -28,9 +29,9 @@ export class PopupdataConnection implements OnInit {
   inbound: any[];
   outbound: any[];
 
+
   constructor(private fb: FormBuilder, public dialogRef: MatDialogRef<PopupdataConnection>,
-    @Optional() @Inject(MAT_DIALOG_DATA) public data: UsersData) {
-    console.log(data);
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: UsersData, private validateservice: ValidationService) {
     this.local_data = { ...data };
     this.action = this.local_data.action;
   }
@@ -38,7 +39,6 @@ export class PopupdataConnection implements OnInit {
   ngOnInit() {
     let dataval = localStorage.getItem('datapoint')
     this.datapointvalues = JSON.parse((dataval));
-    console.log(this.datapointvalues);
     this.filterValues();
     this.createTableForm = this.fb.group({
       // title: [],
@@ -46,11 +46,10 @@ export class PopupdataConnection implements OnInit {
 
     })
 
-    this.datapointform = this.fb.group({
-      name: [''],
+    this.dataconnectionform = this.fb.group({
+      name: ['', Validators.required],
       datapointnames1: ['', Validators.required],
       datapointnames2: ['', Validators.required],
-      secondCtrl: ['', Validators.required]
     });
 
   }
@@ -63,10 +62,10 @@ export class PopupdataConnection implements OnInit {
     this.datapointvalues.forEach(element => {
       if (element.InBound === 'Inbound') {
         this.inbound.push(element.name);
-        console.log(this.inbound);
+
       } else {
         this.outbound.push(element.name)
-        console.log(this.outbound);
+
       }
 
     });
@@ -79,31 +78,40 @@ export class PopupdataConnection implements OnInit {
   }
 
   getname() {
-    return this.datapointform.get('name');
+    return this.dataconnectionform.get('name');
   }
   getdatapointnames1() {
-    return this.datapointform.get('datapointnames1');
+    return this.dataconnectionform.get('datapointnames1');
   }
   getdatapointnames2() {
-    return this.datapointform.get('datapointnames2');
+    return this.dataconnectionform.get('datapointnames2');
   }
   // getsecondCtrl() {
-  //   return this.datapointform.get('secondCtrl');
+  //   return this.dataconnectionform.get('secondCtrl');
   // }
 
 
 
 
   doAction() {
-    this.dialogRef.close({ event: this.action, data: this.local_data });
+    console.log(this.action);
+
+    if (this.action !== 'Delete') {
+      console.log(this.dataconnectionform.invalid);
+      if (!this.dataconnectionform.invalid) {
+        this.dialogRef.close({ event: this.action, data: this.local_data });
+      } else {
+        this.validateservice.markAllFormFieldsAsTouched(this.dataconnectionform);
+      }
+    } else {
+      this.dialogRef.close({ event: this.action, data: this.local_data });
+    }
+
   }
 
   closeDialog() {
     this.dialogRef.close({ event: 'Cancel' });
   }
 
-  // closeDialog() {
-  //   this.dialogRef.close({ event: 'Cancel' });
-  // }
 
 }

@@ -5,14 +5,15 @@
 
         <div [formGroup]="datapointform"
             class="row col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 justify-content-center">
-            <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-xs-12 ">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center ">
                 <h1 mat-dialog-title><span *ngIf="action !== 'Delete'"><strong> {{action}} Data Point</strong></span>
                 </h1>
-                <p class="justify-content0-center" *ngIf="action === 'Delete'">Are you sure You want to delete
+                <p class="justify-content-center font-weight-bold" *ngIf="action === 'Delete'">Are you sure You want to
+                    delete
                     {{local_data.name}}?</p>
                 <div class="row">
                     <mat-form-field *ngIf="action != 'Delete';">
-                        <mat-label>Data Point Name</mat-label>
+                        <mat-label>Data Point Name<span class="astrick font-weight-bold">*</span></mat-label>
                         <input [(ngModel)]="local_data.name" matInput placeholder="Enter name" formControlName='name'>
                         <mat-error
                             *ngIf="datapointform.controls['name'].invalid && (datapointform.controls['name'].dirty || datapointform.controls['name'].touched)">
@@ -26,7 +27,7 @@
                 </div>
                 <div class="row">
                     <mat-form-field *ngIf="action != 'Delete';">
-                        <mat-label>Type</mat-label>
+                        <mat-label>Type<span class="astrick font-weight-bold">*</span></mat-label>
                         <mat-select disableOptionCentering formControlName='type' [(ngModel)]="local_data.type"
                             (selectionChange)="onSelection()">
                             <mat-option value="salesforce">Sales Force</mat-option>
@@ -93,7 +94,7 @@
                 </div>
                 <div class=" row">
                     <mat-form-field *ngIf="action != 'Delete';">
-                        <mat-label>URL</mat-label>
+                        <mat-label>URL<span class="astrick font-weight-bold">*</span></mat-label>
                         <input [(ngModel)]="local_data.url" matInput placeholder="http://........"
                             formControlName='url'>
                         <mat-error
@@ -108,7 +109,7 @@
                 </div>
                 <div class="row">
                     <mat-form-field *ngIf="action != 'Delete';">
-                        <mat-label>InBound/OutBound</mat-label>
+                        <mat-label>InBound/OutBound<span class="astrick font-weight-bold">*</span></mat-label>
                         <mat-select disableOptionCentering formControlName='InBound' [(ngModel)]="local_data.InBound">
                             <mat-option value="Inbound">InBound</mat-option>
                             <mat-option value="Outbound">OutBound</mat-option>
@@ -127,7 +128,7 @@
             </div>
         </div>
 
-        <div class="row justify-content-center">
+        <div class="row justify-content-center my-3">
             <button mat-button class="mr-2" mat-flat-button color="primary" (click)="doAction()">{{action}}</button>
             <button mat-button class="ml-2" (click)="closeDialog()" mat-flat-button color="warn">Cancel</button>
         </div>

@@ -3,6 +3,7 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { PopupdataConnection } from 'src/app/feature/data-connection/popupdata-connection/popupdataconnection.component';
 import { UsersData, PopupdatapointComponent } from '../../data-point/popupdatapoint/popupdatapoint.component';
+import { ValidationService } from 'src/app/shared/services/validation.service';
 // import { MatSelectionList, MatSelectionListChange, MatListOption } from '@angular/material';
 // import { SelectionModel } from '@angular/cdk/collections';
 
@@ -27,7 +28,8 @@ export class PopupschedulerComponent implements OnInit {
 
 
   constructor(private fb: FormBuilder, public dialogRef: MatDialogRef<PopupdataConnection>,
-    @Optional() @Inject(MAT_DIALOG_DATA) public data: UsersData) {
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: UsersData,
+    private validateservice: ValidationService) {
     console.log(data);
     this.local_data = { ...data };
     this.action = this.local_data.action;
@@ -45,19 +47,18 @@ export class PopupschedulerComponent implements OnInit {
     let dataval = localStorage.getItem('dataconnections')
     this.datapointvalues = JSON.parse((dataval));
     this.datapointform = this.fb.group({
-      jobname: [''],
-      startdate: [''],
-      allday: ['', Validators.required],
+      jobname: ['', Validators.required],
+      startdate: ['', Validators.required],
+      allday: [''],
       repeat: [],
-      sType: [this.repeatradiobuttons[0]],
+      sType: [],
       daily: [''],
       noOftimes: [''],
       noofhours: [''],
-      weekly: ['', Validators.required],
-      monthly: ['', Validators.required],
-      yearly: ['', Validators.required],
-
-      enddate: ['', Validators.required],
+      weekly: [''],
+      monthly: [''],
+      yearly: [''],
+      enddate: [''],
     });
 
   }
@@ -92,7 +93,18 @@ export class PopupschedulerComponent implements OnInit {
   }
   doAction() {
     console.log(this.datapointform.value)
-    this.dialogRef.close({ event: this.action, data: this.datapointform.value });
+    if (this.action !== 'Delete') {
+      // console.log(this.datapointform.invalid);
+      if (!this.datapointform.invalid) {
+        this.dialogRef.close({ event: this.action, data: this.datapointform.value });
+      } else {
+        this.validateservice.markAllFormFieldsAsTouched(this.datapointform);
+      }
+    } else {
+      this.dialogRef.close({ event: this.action, data: this.datapointform.value });
+    }
+
+    // this.dialogRef.close({ event: this.action, data: this.datapointform.value });
   }
 
   closeDialog() {

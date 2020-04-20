@@ -107,38 +107,25 @@ export class SchedulerComponent implements OnInit {
   getScheduler() {
     this.dataArray = [];
     this.getscheduler.getScheduler().subscribe((res) => {
+      if (res.data.length > 0) {
+        res.data.forEach((element, index = 1) => {
 
-      res.data.forEach((element, index = 1) => {
+          let val = JSON.parse(element.Scheduleoptions);
 
-        let val = JSON.parse(element.Scheduleoptions);
-        console.log(val);
-        if (val['repeat'] != 'null') {
-          if (val['repeatfreq'] === "Daily") {
-            console.log("comming");
-          }
-
-          this.abc = val['startdate'];
-          console.log(this.abc);
-        } if (val['weekly']) {
-          this.abc = val['weekly '];
-        } if (val['monthly']) {
-
-        } if (val['yearly']) {
-
-        }
-        this.dataArray.push({
-          id: (index + 1).toString(),
-          uniqueId: element.UniqueId,
-          jobname: element.Name,
-          Starttime: val['startdate'],
-          nextrunon: this.abc,
-          createdby: 'sangeeth',
-          pause: element.PausedOn,
-          status: 'sangeeth',
+          this.dataArray.push({
+            id: (index + 1).toString(),
+            uniqueId: element.UniqueId,
+            jobname: element.Name,
+            Starttime: val['startdate'],
+            nextrunon: element.nextrunTime ? element.nextrunTime : new Date().getTime(),
+            createdby: 'sangeeth',
+            pause: element.PausedOn,
+            status: element.status,
 
 
+          });
         });
-      });
+      }
 
 
       this.dataSource = new MatTableDataSource<PeriodicElement>(this.dataArray);
@@ -149,6 +136,24 @@ export class SchedulerComponent implements OnInit {
     })
   }
 
+
+  action(data, id) {
+    this.dataArray.filter((value, key) => {
+      console.log(value);
+      console.log(data);
+
+      if (value.uniqueId == id) {
+        this.addservice.actionperform(data, value.uniqueId).subscribe(
+          (res) => {
+            console.log(res);
+            this.getScheduler();
+          }, (err) => {
+            console.log(err);
+          })
+      }
+
+    });
+  }
 
   openDialog(action, obj): void {
     obj.action = action;
