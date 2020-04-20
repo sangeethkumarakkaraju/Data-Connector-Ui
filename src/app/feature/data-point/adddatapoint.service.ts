@@ -15,9 +15,9 @@ export class AdddatapointService {
   configUrl = ENV_CONFIG.API_URLS.DATA_CONNECTION;
 
   adddatapoints(data): Observable<any> {
-    console.log(data);
+
     var formData: any = new FormData();
-    formData.append("Url", data.url);
+    formData.append("url", data.url);
     formData.append("name", data.name);
     formData.append("UrlParams", data.param);
 
@@ -38,19 +38,25 @@ export class AdddatapointService {
   configUrlUpdate = "http://localhost/api-dataconnector/V1/dataconnectorApi/datapointUpdate";
 
   updatedatapoints(data): Observable<any> {
-    console.log(data);
     var formData: any = new FormData();
     formData.append("url", data.url);
     formData.append("name", data.name);
-    formData.append("urldata", data.param);
+    console.log(data.param);
+
+    formData.append("UrlParams", data.param);
 
     formData.append("method", 'post');
     formData.append("direction", data.InBound);
     formData.append("createdon", new Date().getTime());
     formData.append("updatedon", new Date().getTime());
     formData.append("scheduledon", new Date().getTime());
+    console.log(data.auth);
+
     formData.append("Auth", data.auth);
+
     formData.append("Type", data.type);
+    console.log(data.headers);
+
     formData.append("Header", data.headers);
     formData.append("uniquid", data.uniqueId);
 

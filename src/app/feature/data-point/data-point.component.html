@@ -99,22 +99,26 @@
                             <div class="date-block" [formGroup]="filterForm">
                                 <div class="date-block__list">
                                     <mat-form-field>
-                                        <input matInput [matDatepicker]="fromDate" placeholder="From Date"
+                                        <input #frominput matInput [matDatepicker]="fromDate" placeholder="From Date"
                                             formControlName="fromDate1">
                                         <mat-datepicker-toggle matSuffix [for]="fromDate"></mat-datepicker-toggle>
-                                        <mat-datepicker #fromDate></mat-datepicker>
+                                        <mat-datepicker #fromDate disabled="false"></mat-datepicker>
+
                                     </mat-form-field>
                                 </div>
                                 <div class="date-block__list">
                                     <mat-form-field>
-                                        <input matInput [matDatepicker]="toDate" placeholder="To Date"
+                                        <input #toinput matInput [matDatepicker]="toDate" placeholder="To Date"
                                             formControlName="toDate1">
                                         <mat-datepicker-toggle matSuffix [for]="toDate"></mat-datepicker-toggle>
-                                        <mat-datepicker #toDate></mat-datepicker>
+                                        <mat-datepicker #toDate disabled="false"></mat-datepicker>
                                     </mat-form-field>
                                 </div>
                                 <button mat-button color="primary" class="primary"
                                     (click)="setUpDateFilter1('updatedon')">Submit</button>
+
+                                <button mat-raised-button (click)="resetForm()">Reset</button>
+
                             </div>
                         </ng-template>
                     </mat-menu>
@@ -167,6 +171,8 @@
                                 </div>
                                 <button mat-button color="primary" class="primary"
                                     (click)="setUpDateFilter('updatedon')">Submit</button>
+                                <button mat-raised-button (click)="resetForm()">Reset</button>
+
                             </div>
                         </ng-template>
                     </mat-menu>
@@ -190,7 +196,7 @@
 
         </table>
 
-        <div *ngIf="dataArray.length <= 0" class="no-records">
+        <div *ngIf="dataSource.length === 0" class="no-records">
             <p>No Records Found</p>
         </div>
 

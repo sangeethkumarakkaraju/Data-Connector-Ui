@@ -29,7 +29,6 @@ export class PopupdatapointComponent implements OnInit {
   constructor(private fb: FormBuilder, public dialogRef: MatDialogRef<PopupdatapointComponent>,
 
     @Optional() @Inject(MAT_DIALOG_DATA) public data: UsersData, private validateservice: ValidationService) {
-    console.log(data);
     this.local_data = { ...data };
     this.action = this.local_data.action;
     if (this.action === 'Add') {
@@ -48,23 +47,31 @@ export class PopupdatapointComponent implements OnInit {
       type: ['', Validators.required],
       url: ['', Validators.required],
       InBound: ['', Validators.required],
-      param: ['', Validators.required],
-      auth: ['', Validators.required],
-      headers: ['', Validators.required]
+      param: [],
+      auth: [],
+      headers: []
     });
 
   }
   doAction() {
 
-    this.dialogRef.close({ event: this.action, data: this.local_data });
 
+    if (this.action !== 'Delete') {
+      if (!this.datapointform.invalid) {
+        this.dialogRef.close({ event: this.action, data: this.local_data });
+      } else {
+        this.validateservice.markAllFormFieldsAsTouched(this.datapointform);
+      }
+    } else {
+      this.dialogRef.close({ event: this.action, data: this.local_data });
+    }
   }
 
   closeDialog() {
     this.dialogRef.close({ event: 'Cancel' });
   }
   onSelection() {
-    console.log("thes")
+
     this.hidefields = true;
   }
 

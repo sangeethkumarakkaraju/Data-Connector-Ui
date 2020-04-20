@@ -6,7 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { TableUtil } from "./datapoint.util";
 
 
-import { MatDialog, MatTable, MatPaginator } from '@angular/material';
+import { MatDialog, MatTable, MatPaginator, MatInput } from '@angular/material';
 import { map } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 import { DatePipe } from '@angular/common';
@@ -37,6 +37,10 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class DataPointComponent implements OnInit {
   action = "Add";
   @ViewChild(MatSort, { static: true }) sort: MatSort;
+  // @ViewChild('frominput', { static: true }) fromInput: MatInput;
+
+  // @ViewChild('toinput', { static: true }) toInput: MatInput;
+
   @ViewChild(MatTable, { static: true }) table: MatTable<any>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   positionFilter = new FormControl();
@@ -89,7 +93,7 @@ export class DataPointComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result.event == 'Add') {
-        // console.log(result);
+
         this.addRowData(result.data);
       } else if (result.event == 'Update') {
         this.updateRowData(result.data);
@@ -102,7 +106,7 @@ export class DataPointComponent implements OnInit {
   addRowData(row_obj) {
     this.adddatapointService.adddatapoints(row_obj).subscribe(
       (res) => {
-        console.log(res);
+
         this.getDataPoints();
 
       }, (err) => {
@@ -116,13 +120,11 @@ export class DataPointComponent implements OnInit {
 
   updateRowData(row_obj) {
     this.dataArray.filter((value, key) => {
-      console.log(value);
-      console.log(key);
+
 
       if (value.uniqueId == row_obj.uniqueId) {
         this.adddatapointService.updatedatapoints(row_obj).subscribe(
           (res) => {
-            console.log(res);
             this.getDataPoints();
           }, (err) => {
             console.log(err);
@@ -132,14 +134,15 @@ export class DataPointComponent implements OnInit {
     });
     // this.dataSource = new MatTableDataSource<PeriodicElement>(this.dataArray);
   }
+  resetForm1() {
+    this.filterForm.reset()
+  }
   getDataPoints() {
     this.dataArray = [];
     this.getservice.getDatapoints().subscribe((res) => {
-      console.log(res);
       let index = 1;
       if (res.data.length > 0) {
         res.data.forEach((element, index) => {
-          console.log(index)
           this.dataArray.push({
             createdon: new Date(element.Created),
             createdby: 'sangeeth',
@@ -162,7 +165,7 @@ export class DataPointComponent implements OnInit {
 
 
       this.dataSource = new MatTableDataSource<PeriodicElement>(this.dataArray);
-      console.log(this.dataArray);
+
       localStorage.setItem('datapoint', JSON.stringify(this.dataArray));
     }, (err) => {
 
@@ -175,14 +178,13 @@ export class DataPointComponent implements OnInit {
     // let index: number = this.dataArray.findIndex(d => d.name === row_obj.name);
     // this.dataArray.splice(index, 1)
     // this.dataSource = new MatTableDataSource<PeriodicElement>(this.dataArray);
-    //console.log(this.dataArray.length)
 
     this.dataArray.filter((value, key) => {
 
       if (value.uniqueId == row_obj.uniqueId) {
         this.adddatapointService.deletedatapoints(row_obj).subscribe(
           (res) => {
-            console.log(res);
+
             this.getDataPoints();
           }, (err) => {
             console.log(err);
@@ -207,7 +209,7 @@ export class DataPointComponent implements OnInit {
   setUpDateFilter(column: string) {
     this.pipe = new DatePipe('en');
     this.dataSource.filterPredicate = (data: PeriodicElement, filter) => {
-      console.log(data)
+
       if (new Date(this.fromDate).getTime() && new Date(this.toDate).getTime()) {
         return new Date(data.updatedon).getTime() >= this.fromDate && new Date(data.updatedon).getTime() <= this.toDate;
       }
@@ -218,7 +220,7 @@ export class DataPointComponent implements OnInit {
   setUpDateFilter1(column: string) {
     this.pipe = new DatePipe('en');
     this.dataSource.filterPredicate = (data: PeriodicElement, filter) => {
-      console.log(data)
+
       if (new Date(this.fromDate1).getTime() && new Date(this.toDate1).getTime()) {
         return new Date(data.createdon).getTime() >= this.fromDate1 && new Date(data.createdon).getTime() <= this.toDate1;
       }

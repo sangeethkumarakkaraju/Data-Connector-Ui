@@ -36,7 +36,7 @@ export class AddschedulerService {
     let formData: any = new FormData();
     formData.append("Scheduleoptions", JSON.stringify(obj));
     formData.append("name", data.jobname);
-    formData.append("status", "sccheduled");
+    formData.append("status", "scheduled");
     formData.append("scheduledon", data.startdate);
     formData.append("method", 'get');
 
@@ -60,4 +60,23 @@ export class AddschedulerService {
       return Observable.throw(error);
     }
   }
+
+  actionperform(data, id): Observable<any> {
+    var formData: any = new FormData();
+    console.log(data);
+    console.log(id);
+
+    // let scheduled=form
+    formData.append("uniquid", id);
+    if (data) {
+      formData.append("status", data);
+
+    }
+
+    return this.http
+      .post(this.configUrl + '/schedulerAction', formData).pipe(map((res) => {
+        return res;
+      }), catchError(this.handleError));
+  }
+
 }

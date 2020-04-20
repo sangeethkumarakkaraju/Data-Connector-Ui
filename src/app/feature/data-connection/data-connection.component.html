@@ -222,7 +222,7 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-        <div *ngIf="dataArray.length <= 0" class="no-records">
+        <div *ngIf="dataSource.length === 0" class="no-records">
             <p>No Records Found</p>
         </div>
 

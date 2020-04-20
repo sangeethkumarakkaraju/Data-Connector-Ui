@@ -65,7 +65,7 @@ export class DataConnectionComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result.event == 'Add') {
-        // console.log(result);
+
         this.addRowData(result.data);
       } else if (result.event == 'Update') {
         this.updateRowData(result.data);
@@ -80,7 +80,7 @@ export class DataConnectionComponent implements OnInit {
   addRowData(row_obj) {
     this.addservice.adddatapoints(row_obj).subscribe(
       (res) => {
-        console.log(res);
+
         this.getDataConnectionPoints();
 
       }, (err) => {
@@ -95,7 +95,7 @@ export class DataConnectionComponent implements OnInit {
       if (value.uniqueId == row_obj.uniqueId) {
         this.addservice.updatedatapoints(row_obj).subscribe(
           (res) => {
-            console.log(res);
+
             this.getDataConnectionPoints();
 
           }, (err) => {
@@ -132,28 +132,30 @@ export class DataConnectionComponent implements OnInit {
   getDataConnectionPoints() {
     this.dataArray = [];
     this.getservice.getdataConnections().subscribe((res) => {
-      console.log(res);
-      res.data.forEach((element, index = 1) => {
-        console.log(element)
-        this.dataArray.push({
-          id: (index + 1).toString(),
-          uniqueId: element.UniqueId,
-          createdon: new Date(element.Created),
-          createdby: 'sangeeth',
-          name: element.Name,
-          inbound: element.direction,
-          outbound: element.Data,
-          lastchangedby: 'sangeeth',
-          lastchangedon: new Date(element.Updated)
+
+      if (res.data.length > 0) {
+        res.data.forEach((element, index = 1) => {
+
+          this.dataArray.push({
+            id: (index + 1).toString(),
+            uniqueId: element.UniqueId,
+            createdon: new Date(element.Created),
+            createdby: 'sangeeth',
+            name: element.Name,
+            inbound: element.direction,
+            outbound: element.Data,
+            lastchangedby: 'sangeeth',
+            lastchangedon: new Date(element.Updated)
 
 
+          });
         });
-      });
+      }
 
 
       this.dataSource = new MatTableDataSource<PeriodicElement>(this.dataArray);
       localStorage.setItem('dataconnections', JSON.stringify(this.dataArray));
-      console.log(this.dataSource)
+
     }, (err) => {
 
     })
@@ -172,7 +174,7 @@ export class DataConnectionComponent implements OnInit {
   setUpDateFilter(column: string) {
     this.pipe = new DatePipe('en');
     this.dataSource.filterPredicate = (data: PeriodicElement, filter) => {
-      console.log(data)
+
       if (new Date(this.fromDate).getTime() && new Date(this.toDate).getTime()) {
         return new Date(data.lastchangedon).getTime() >= this.fromDate && new Date(data.lastchangedon).getTime() <= this.toDate;
       }
@@ -183,7 +185,7 @@ export class DataConnectionComponent implements OnInit {
   setUpDateFilter1(column: string) {
     this.pipe = new DatePipe('en');
     this.dataSource.filterPredicate = (data: PeriodicElement, filter) => {
-      console.log(data)
+
       if (new Date(this.fromDate1).getTime() && new Date(this.toDate1).getTime()) {
         return new Date(data.createdon).getTime() >= this.fromDate1 && new Date(data.createdon).getTime() <= this.toDate1;
       }

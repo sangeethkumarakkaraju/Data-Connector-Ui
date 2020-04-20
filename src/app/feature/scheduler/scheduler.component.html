@@ -146,9 +146,9 @@
                         <span> </span>
                     </div>
                 </th>
-                <td class="customcss" mat-cell *matCellDef="let element"><button mat-icon-button>
-                        <mat-icon aria-label="pause">pause</mat-icon>
-                    </button></td>
+                <td class="customcss" mat-cell *matCellDef="let element"><span
+                        style="color: #333;">{{ element.status }}</span>
+                </td>
             </ng-container>
 
 
@@ -158,10 +158,28 @@
                         <span> Status</span>
                     </div>
                 </th>
-                <td mat-cell *matCellDef="let element"> <span style="color: #333;">Scheuled</span>
+                <td mat-cell *matCellDef="let element">
+                    <button mat-icon-button *ngIf="element.status === 'scheduled'"
+                        (click)="action('pause', element.uniqueId)" style="color: #333;">
+                        <mat-icon aria-label="pause">pause</mat-icon>
+                    </button>
+
+                    <button mat-icon-button *ngIf="element.status === 'pause'"
+                        (click)="action('scheduled', element.uniqueId)" style="color: #333;">
+                        <span class="material-icons">
+                            play_arrow
+                        </span>
+
+                    </button>
+                    <button mat-icon-button [ngStyle]="{'color':'#B22222'}" (click)="action('',element.uniqueId)"
+                        *ngIf="element.status === 'pause'">
+                        <mat-icon aria-label="Delete">delete</mat-icon>
+                    </button>
 
                 </td>
             </ng-container>
+
+
 
 
             <!-- Action Column -->
@@ -183,7 +201,7 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
         </table>
-        <div *ngIf="dataArray.length <= 0" class="no-records">
+        <div *ngIf="dataSource.length === 0" class="no-records">
             <p>No Records Found</p>
         </div>
         <!-- <mat-paginator [pageSizeOptions]="[3, 6, 9]" showFirstLastButtons></mat-paginator> -->
