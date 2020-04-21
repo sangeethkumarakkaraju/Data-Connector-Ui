@@ -19,7 +19,7 @@ export class AdddatapointService {
     var formData: any = new FormData();
     formData.append("url", data.url);
     formData.append("name", data.name);
-    formData.append("UrlParams", data.param);
+    formData.append("urldata", data.param);
 
     formData.append("method", 'post');
     formData.append("direction", data.InBound);
@@ -43,7 +43,7 @@ export class AdddatapointService {
     formData.append("name", data.name);
     console.log(data.param);
 
-    formData.append("UrlParams", data.param);
+    formData.append("urldata", data.param);
 
     formData.append("method", 'post');
     formData.append("direction", data.InBound);
