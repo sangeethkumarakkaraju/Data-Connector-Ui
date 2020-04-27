@@ -1,17 +1,28 @@
 <div class="d-flex justify-content-center">
 
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 px-0">
-        <button mat-button class="close-icon" [mat-dialog-close]="true">
+        <button *ngIf="action !== 'Delete'" mat-button class="close-icon" [mat-dialog-close]="true">
             X
         </button>
 
         <div [formGroup]="datapointform"
             class="row col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 justify-content-center px-0 mx-0">
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <h1 mat-dialog-title> <strong>{{action}} Job Scheduler</strong></h1>
+                <!-- <h1 mat-dialog-title> <strong>{{action}} Job Scheduler</strong></h1> -->
+
+
+                <h1 mat-dialog-title><span *ngIf="action !== 'Delete'"><strong> {{action}}Job Scheduler</strong></span>
+                </h1>
+                <p class="justify-content-center font-weight-bold" *ngIf="action === 'Delete'">Are you sure You want to
+                    delete
+                    {{local_data.jobname}}?</p>
+
+
+
+
                 <div class="row col-xl-8 col-lg-8 col-md-8 col-sm-12 col-xs-12 mx-auto">
 
-                    <mat-form-field>
+                    <mat-form-field *ngIf="action != 'Delete';">
                         <mat-label>Job Name<span class="astrick font-weight-bold">*</span> </mat-label>
                         <mat-select disableOptionCentering placeholder="Enter Job Name" [(ngModel)]="local_data.jobname"
                             formControlName="jobname">
@@ -25,29 +36,33 @@
                             Job Name is Required.
                         </mat-error>
                     </mat-form-field>
-                    <div class="my-3">
+                    <div class="my-3" *ngIf="action != 'Delete';">
                         <label>Start Time<span class="astrick font-weight-bold">*</span></label>
-                        <p-calendar formControlName='startdate' [baseZIndex]="99999" placeholder="Select Date & Time"
-                            showIcon="true" showTime="true" hourFormat="12" dateFormat="dd.mm.yy" class="mx-auto">
+                        <p-calendar formControlName='startdate' [(ngModel)]="local_data.startdate" [baseZIndex]="99999"
+                            placeholder="Select Date & Time" showIcon="true" showTime="true" hourFormat="12"
+                            dateFormat="dd.mm.yy" class="mx-auto">
                             <mat-error
                                 *ngIf="datapointform.controls['startdate'].invalid && (datapointform.controls['startdate'].dirty || datapointform.controls['startdate'].touched)">
                                 Start Time is Required.
                             </mat-error>
                         </p-calendar>
                     </div>
-                    <div class="row col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 my-3 mx-0 px-0">
+                    <div class="row col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 my-3 mx-0 px-0"
+                        *ngIf="action != 'Delete';">
                         <div class="  col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 my-3 mx-0 px-0">
 
                             <div class="ui-g">
                                 <div class="ui-g-4">
-                                    <mat-checkbox formControlName="allday">All Day</mat-checkbox>
+                                    <mat-checkbox formControlName="allday" [(ngModel)]="local_data.allday">All Day
+                                    </mat-checkbox>
                                 </div>
                             </div>
                         </div>
                         <div class=" col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 my-3 mx-0 px-0">
                             <div class="ui-g">
                                 <div class="ui-g-4">
-                                    <mat-checkbox formControlName="repeat" (change)="check($event)">Repeat
+                                    <mat-checkbox formControlName="repeat" [(ngModel)]="local_data.repeat"
+                                        (change)="check($event)">Repeat
                                     </mat-checkbox>
                                 </div>
                             </div>
@@ -66,10 +81,11 @@
                 </div>
 
 
-                <div class="row col-xl-12 col-lg-12 col-md-12 col-xs-12 mx-0 mx-auto px-0" *ngIf="showfield">
+                <div class="row col-xl-12 col-lg-12 col-md-12 col-xs-12 mx-0 mx-auto px-0"
+                    *ngIf="showfield && action != 'Delete';">
                     <div class="col-12 col-xl-3 col-lg-3 col-md-3 col-xs-12 float-left">
                         <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
-                            [(ngModel)]="local_data.repeatfreq" formControlName="sType">
+                            [(ngModel)]="local_data.repeatfreq" formControlName="sType" [(ngModel)]="local_data.sType">
                             <mat-radio-button class="example-radio-button"
                                 *ngFor="let repeatval of repeatradiobuttons; let i = index;" [value]="repeatval">
                                 {{repeatval}}
@@ -84,7 +100,7 @@
                                 <p>Recur Every day
                                     <input type="number" formControlName="noOftimes" style="width:75px;"
                                         class="form-field">
-                                    number of times, every <input type="number" formControlName="noofhours"
+                                    number of times, every <input type="number" [(ngModel)]="local_data.number"
                                         style="width:75px;" class="form-field">
                                     time interval
                                 </p>
@@ -93,7 +109,8 @@
                                 <div>
 
                                     <ng-container class="mat-checkbox" *ngFor="let item of items">
-                                        <mat-checkbox formControlName="weekly" [checked]="item.selected">{{item.label}}
+                                        <mat-checkbox formControlName="weekly" [(ngModel)]="local_data.weekly"
+                                            [checked]="item.selected">{{item.label}}
                                         </mat-checkbox>
                                     </ng-container>
 
@@ -105,15 +122,17 @@
                             </div>
                             <div *ngSwitchCase="'Monthly'">
                                 <div class="col-xl-8 col-lg-8 col-md-5 col-sm-12 col-xs-12   float-left">
-                                    <p-calendar formControlName='monthly' placeholder="Select Date & Time"
-                                        showIcon="true" showTime="true" hourFormat="12" dateFormat="dd.mm.yy">
+                                    <p-calendar formControlName='monthly' [(ngModel)]="local_data.monthly"
+                                        placeholder="Select Date & Time" showIcon="true" showTime="true" hourFormat="12"
+                                        dateFormat="dd.mm.yy">
                                     </p-calendar>
                                 </div>
                             </div>
                             <div *ngSwitchCase="'Yearly'">
                                 <div class="col-xl-8 col-lg-8 col-md-5 col-sm-12 col-xs-12   float-left">
-                                    <p-calendar formControlName='yearly' placeholder="Select Date & Time"
-                                        showIcon="true" showTime="true" hourFormat="12" dateFormat="dd.mm.yy">
+                                    <p-calendar formControlName='yearly' [(ngModel)]="local_data.yearly"
+                                        placeholder="Select Date & Time" showIcon="true" showTime="true" hourFormat="12"
+                                        dateFormat="dd.mm.yy">
                                     </p-calendar>
                                 </div>
                             </div>

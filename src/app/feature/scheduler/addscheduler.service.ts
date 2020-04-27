@@ -78,5 +78,17 @@ export class AddschedulerService {
         return res;
       }), catchError(this.handleError));
   }
+  configUrldelete = "http://localhost/api-dataconnector/V1/dataconnectorApi/schedulerAction";
+
+  deletejobscheduler(data): Observable<any> {
+    var formData: any = new FormData();
+
+    formData.append("uniquid", data.uniqueId);
+
+    return this.http
+      .post(this.configUrl + '/schedulerAction', formData).pipe(map((res) => {
+        return res;
+      }), catchError(this.handleError));
+  }
 
 }

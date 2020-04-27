@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { ValidationService } from 'src/app/shared/services/validation.service';
 import { CredentialsService } from 'src/app/shared/services/credentials.service';
+import { map } from 'rxjs/operators';
+import { pipe } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -14,10 +16,12 @@ export class HomeComponent implements OnInit {
   errorMsg: string;
   // username: FormControl;
   // password: FormControl;
+
   hide: boolean = true;
   constructor(private router: Router, private httpClient: HttpClient,
     private Validationservice: ValidationService,
     private fb: FormBuilder, private credentialsservice: CredentialsService) { }
+
   loginForm: FormGroup;
 
   showError: boolean = false;
@@ -26,6 +30,7 @@ export class HomeComponent implements OnInit {
       username: ['', [Validators.required]],
       password: ['', [Validators.required]]
     });
+
   }
   // getusername() {
   //   return this.loginForm.get("username");
