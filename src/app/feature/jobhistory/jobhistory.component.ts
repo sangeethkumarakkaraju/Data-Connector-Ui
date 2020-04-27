@@ -119,10 +119,10 @@ export class JobhistoryComponent implements OnInit {
     this.applyDatefilter();
   }
 
-  // applyFilter(filterValue: any) {
-  //   this.dataSource.filter = filterValue.trim().toLowerCase() || '';
+  applyFilter(filterValue: any) {
+    this.dataSource.filter = filterValue.trim().toLowerCase() || '';
 
-  // }
+  }
 
   getjobscheduler() {
     this.dataArray = [];
