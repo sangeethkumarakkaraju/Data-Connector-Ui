@@ -11,6 +11,8 @@ import { CdkTableModule } from '@angular/cdk/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { CheckboxModule } from 'primeng/checkbox';
 // import { MatListOption, MatListModule, MatSelectionList, MatSelectionListChange } from '@angular/material/list';
+import { FileUploadModule } from 'primeng/fileupload';
+
 
 
 
@@ -45,7 +47,8 @@ import { CheckboxModule } from 'primeng/checkbox';
     MatPaginatorModule,
     MatToolbarModule,
     MatTabsModule,
-    MatSortModule
+    MatSortModule,
+    FileUploadModule
 
 
 
@@ -78,7 +81,8 @@ import { CheckboxModule } from 'primeng/checkbox';
     MatPaginatorModule,
     MatToolbarModule,
     MatTabsModule,
-    MatSortModule
+    MatSortModule,
+    FileUploadModule
 
 
   ]

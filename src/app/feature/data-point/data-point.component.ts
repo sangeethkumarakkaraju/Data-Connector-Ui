@@ -86,6 +86,7 @@ export class DataPointComponent implements OnInit {
     obj.action = action;
     const dialogRef = this.dialog.open(PopupdatapointComponent, {
       width: '500px',
+      maxHeight: '700px',
       data: obj,
       disableClose: true,
       panelClass: 'my-dialog',

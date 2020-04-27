@@ -19,6 +19,9 @@ export class PopupdatapointComponent implements OnInit {
 
 
   hidefields: boolean;
+  hideoraclefields: boolean;
+  hidenosqlfields: boolean;
+  hidefilesystem: boolean;
   secondFormGroup: FormGroup;
 
 
@@ -33,8 +36,14 @@ export class PopupdatapointComponent implements OnInit {
     this.action = this.local_data.action;
     if (this.action === 'Add') {
       this.hidefields = false;
+      this.hidenosqlfields = false;
+      this.hideoraclefields = false;
+      this.hidefilesystem = false;
     } else {
       this.hidefields = true;
+      this.hidenosqlfields = true;
+      this.hideoraclefields = true;
+      this.hidefilesystem = true;
     }
   }
 
@@ -49,7 +58,15 @@ export class PopupdatapointComponent implements OnInit {
       InBound: ['', Validators.required],
       param: [],
       auth: [],
-      headers: []
+      headers: [],
+      portnumber: [],
+      ipaddress: [],
+      database: [],
+      username: [],
+      password: [],
+      pathname: [],
+      filename: []
+      // uplaodfile: []
     });
 
   }
@@ -70,9 +87,32 @@ export class PopupdatapointComponent implements OnInit {
   closeDialog() {
     this.dialogRef.close({ event: 'Cancel' });
   }
-  onSelection() {
-
-    this.hidefields = true;
+  onSelection(e) {
+    let typevalues = this.datapointform.controls.type.value;
+    if (typevalues === "nosql") {
+      this.hidenosqlfields = true;
+      this.hidefields = false;
+      this.hideoraclefields = false;
+      this.hidefilesystem = false;
+    } else if (typevalues === "oracle") {
+      this.hideoraclefields = true;
+      this.hidefilesystem = false;
+      this.hidefields = false;
+      this.hidenosqlfields = false;
+    } else if (typevalues === "filesystem") {
+      this.hidefilesystem = true;
+      this.hidefields = false;
+      this.hidenosqlfields = false;
+      this.hideoraclefields = false;
+    } else if (typevalues === "salesforce" || typevalues === "sap") {
+      this.hidefields = true;
+      this.hidenosqlfields = false;
+      this.hideoraclefields = false;
+      this.hidefilesystem = false;
+    }
+  }
+  myUploader(event) {
+    //event.files == files to upload
   }
 
 }

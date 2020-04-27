@@ -48,7 +48,7 @@ export class SchedulerComponent implements OnInit {
   get fromDate1() { return this.filterForm.get('fromDate1').value; }
   get toDate1() { return this.filterForm.get('toDate1').value; }
 
-  constructor(private dialog: MatDialog, private addservice: AddschedulerService, private getscheduler: GetschedulerService) {
+  constructor(private dialog: MatDialog, private addservice: AddschedulerService, private getscheduler: GetschedulerService, private addscheduler: AddschedulerService) {
 
   }
 
@@ -104,6 +104,29 @@ export class SchedulerComponent implements OnInit {
   applyDatefilter() {
     this.dataSource.filter = '' + Math.random();
   }
+
+  deleteRowData(row_obj) {
+    // let index: number = this.dataArray.findIndex(d => d.name === row_obj.name);
+    // this.dataArray.splice(index, 1)
+    // this.dataSource = new MatTableDataSource<PeriodicElement>(this.dataArray);
+
+    this.dataArray.filter((value, key) => {
+
+      if (value.uniqueId == row_obj.uniqueId) {
+        this.addscheduler.deletejobscheduler(row_obj).subscribe(
+          (res) => {
+            console.log(res);
+
+            this.getScheduler();
+          }, (err) => {
+            console.log(err);
+          })
+      }
+
+    });
+
+
+  }
   getScheduler() {
     this.dataArray = [];
     this.getscheduler.getScheduler().subscribe((res) => {
@@ -137,23 +160,7 @@ export class SchedulerComponent implements OnInit {
   }
 
 
-  action(data, id) {
-    this.dataArray.filter((value, key) => {
-      console.log(value);
-      console.log(data);
 
-      if (value.uniqueId == id) {
-        this.addservice.actionperform(data, value.uniqueId).subscribe(
-          (res) => {
-            console.log(res);
-            this.getScheduler();
-          }, (err) => {
-            console.log(err);
-          })
-      }
-
-    });
-  }
   reset() {
     this.filterForm.controls.fromDate.setValue('');
     this.filterForm.controls.toDate.setValue('');
@@ -169,7 +176,7 @@ export class SchedulerComponent implements OnInit {
     obj.action = action;
     const dialogRef = this.dialog.open(PopupschedulerComponent, {
       width: '650px',
-      height: '650px',
+      maxHeight: '650px',
       data: obj,
       disableClose: true,
       panelClass: 'my-dialog',
@@ -182,7 +189,10 @@ export class SchedulerComponent implements OnInit {
       } else if (result.event == 'Update') {
         // this.updateRowData(result.data);
       } else if (result.event == 'Delete') {
-        //this.deleteRowData(result.data);
+        this.deleteRowData(result.data);
+        // console.log(result.data);
+
+
       }
     });
 
@@ -216,6 +226,26 @@ export class SchedulerComponent implements OnInit {
     });
     this.dataSource = new MatTableDataSource<PeriodicElement>(this.dataArray);
   }
+  action(data, id) {
+    this.dataArray.filter((value, key) => {
+      console.log(value);
+      console.log(data);
+
+      if (value.uniqueId == id) {
+        this.addservice.actionperform(data, value.uniqueId).subscribe(
+          (res) => {
+            console.log(res);
+            this.getScheduler();
+          }, (err) => {
+            console.log(err);
+          })
+      }
+
+    });
+  }
+
+
+
 }
 
 

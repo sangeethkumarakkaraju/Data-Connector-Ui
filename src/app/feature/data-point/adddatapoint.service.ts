@@ -65,7 +65,7 @@ export class AdddatapointService {
 
     }).pipe(map(this.extractData), catchError(this.handleError))
   }
-  configUrldelete = "http://localhost/api-dataconnector/V1/dataconnectorApi/deletedatapoint";
+  //configUrldelete = "http://localhost/api-dataconnector/V1/dataconnectorApi/deletedatapoint";
 
   deletedatapoints(data): Observable<any> {
     var formData: any = new FormData();

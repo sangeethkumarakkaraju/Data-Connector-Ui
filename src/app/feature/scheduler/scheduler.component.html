@@ -53,7 +53,7 @@
                     </div>
                     <mat-form-field appearance="outline">
                         <input matInput class="form-field" [matMenuTriggerFor]="menu1" placeholder="Filter..."
-                            (keyup)="applyFilter($event.target.value)" (focus)="setupFilter('createdon')">
+                            (keyup)="applyFilter($event.target.value)" (focus)="setupFilter('Starttime')">
                     </mat-form-field>
                     <mat-menu #menu1 class="custondrpdwn1">
                         <ng-template matMenuContent>
@@ -75,7 +75,7 @@
                                     </mat-form-field>
                                 </div>
                                 <button mat-button color="primary" class="primary"
-                                    (click)="setUpDateFilter1('updatedon')">Submit</button>
+                                    (click)="setUpDateFilter1('Starttime')">Submit</button>
                                 <button mat-button color="primary" class="primary" (click)="reset()">Reset</button>
                             </div>
                         </ng-template>
@@ -93,7 +93,7 @@
                     </div>
                     <mat-form-field appearance="outline">
                         <input matInput class="form-field" [matMenuTriggerFor]="menu" placeholder="Filter..."
-                            (keyup)="applyFilter($event.target.value)" (focus)="setupFilter('updatedon')">
+                            (keyup)="applyFilter($event.target.value)" (focus)="setupFilter('nextrunon')">
                     </mat-form-field>
 
                     <mat-menu #menu class="custondrpdwn">
@@ -116,7 +116,7 @@
                                     </mat-form-field>
                                 </div>
                                 <button mat-button color="primary" class="primary"
-                                    (click)="setUpDateFilter('updatedon')">Submit</button>
+                                    (click)="setUpDateFilter('nextrunon')">Submit</button>
                                 <button mat-button color="primary" class="primary" (click)="reset()">Reset</button>
                             </div>
                         </ng-template>
@@ -173,7 +173,7 @@
                         </span>
 
                     </button>
-                    <button mat-icon-button [ngStyle]="{'color':'#B22222'}" (click)="action('',element.uniqueId)"
+                    <button mat-icon-button [ngStyle]="{'color':'#B22222'}" (click)="openDialog('Delete',element)"
                         *ngIf="element.status === 'scheduled'">
                         <mat-icon aria-label="Delete">delete</mat-icon>
                     </button>
@@ -191,7 +191,8 @@
 
                     <button mat-icon-button [ngStyle]="{'color':'#ff6200'}" (click)="openDialog('Update',element)">
                         <mat-icon aria-label="Edit">edit</mat-icon>
-                    </button> |
+                    </button>
+
                     <button mat-icon-button [ngStyle]="{'color':'#B22222'}" (click)="openDialog('Delete',element)">
                         <mat-icon aria-label="Delete">delete</mat-icon>
                     </button>

@@ -96,12 +96,12 @@ export class PopupschedulerComponent implements OnInit {
     if (this.action !== 'Delete') {
       // console.log(this.datapointform.invalid);
       if (!this.datapointform.invalid) {
-        this.dialogRef.close({ event: this.action, data: this.datapointform.value });
+        this.dialogRef.close({ event: this.action, data: this.local_data });
       } else {
         this.validateservice.markAllFormFieldsAsTouched(this.datapointform);
       }
     } else {
-      this.dialogRef.close({ event: this.action, data: this.datapointform.value });
+      this.dialogRef.close({ event: this.action, data: this.local_data });
     }
 
     // this.dialogRef.close({ event: this.action, data: this.datapointform.value });
