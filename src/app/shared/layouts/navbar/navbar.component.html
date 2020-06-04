@@ -10,13 +10,17 @@
                 Data Point </button>
             <button mat-button (click)="navigateToDataconnection() ; setActive('btn2')"
                 [class.active]="isActive('btn2')"> Data Connection </button>
+            <button mat-button (click)="navigateTomapping() ;setActive('btn3')"
+                [class.active]="isActive('btn3')">Mapping
+            </button>
 
-            <button mat-button (click)="navigateToScheduler() ;setActive('btn3')" [class.active]="isActive('btn3')">
+            <button mat-button (click)="navigateToScheduler() ;setActive('btn4')" [class.active]="isActive('btn4')">
                 Jobs Scheduler
 
             </button>
-            <button mat-button (click)="navigateToJobhistory() ;setActive('btn4')"
-                [class.active]="isActive('btn4')">Jobs History </button>
+
+            <button mat-button (click)="navigateToJobhistory() ;setActive('btn5')"
+                [class.active]="isActive('btn5')">Jobs History </button>
             <button class="float-right" mat-button (click)='btnSignOut()'> {{ userprofile }}
                 <span style="margin-left:30px;" *ngIf="userprofile">Sign Out </span></button>
 

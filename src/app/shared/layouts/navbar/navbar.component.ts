@@ -63,6 +63,10 @@ export class NavbarComponent implements OnInit {
   navigateToDataconnection() {
     this.router.navigate(['/data-connector'])
   }
+  navigateTomapping() {
+    this.router.navigate(['/mapping']);
+
+  }
   navigateToScheduler() {
     this.router.navigate(['/jobs-scheduler']);
   }

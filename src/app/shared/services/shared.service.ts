@@ -43,6 +43,12 @@ export class DataService {
         }
         return Subject.create(observer, observable);
     }
+    setAcessToken(data) {
+        this.setAcessToken = data;
+    }
+    getAccessToken() {
+        return this.setAcessToken;
+    }
 
 }
 

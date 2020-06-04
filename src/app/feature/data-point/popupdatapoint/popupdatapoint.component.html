@@ -8,9 +8,9 @@
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center ">
                 <h1 mat-dialog-title><span *ngIf="action !== 'Delete'"><strong> {{action}} Data Point</strong></span>
                 </h1>
-                <p class="justify-content-center font-weight-bold" *ngIf="action === 'Delete'">Are you sure You want to
+                <p class="justify-content-center font-weight-bold" *ngIf="action === 'Delete'">Are you sure you want to
                     delete
-                    {{local_data.name}}?</p> //m/m/
+                    {{local_data.name}}?</p>
                 <div class="row">
                     <mat-form-field *ngIf="action != 'Delete';">
                         <mat-label>Data Point Name<span class="astrick font-weight-bold">*</span></mat-label>
@@ -29,7 +29,7 @@
                     <mat-form-field *ngIf="action != 'Delete';">
                         <mat-label>Type<span class="astrick font-weight-bold">*</span></mat-label>
                         <mat-select disableOptionCentering formControlName='type' [(ngModel)]="local_data.type"
-                            (selectionChange)="onSelection($event)">
+                            (selectionChange)="onChange($event)">
                             <mat-option value="salesforce">Sales Force</mat-option>
                             <mat-option value="sap">SAP</mat-option>
                             <mat-option value="nosql">NOSQL</mat-option>
@@ -48,80 +48,93 @@
                     </mat-form-field>
 
                 </div>
+                <div class='row'>
+                    <mat-form-field *ngIf="action != 'Delete';">
+                        <mat-label>Objects<span class="astrick font-weight-bold">*</span></mat-label>
+                        <mat-select disableOptionCentering formControlName='objectValue'
+                            [(ngModel)]="local_data.objectValue">
+                            <mat-option *ngFor="let object of objectValue | keyvalue" value="{{object.value}}">
+                                {{object.value}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
                 <!----No Sql------->
 
-                <div class=" row" *ngIf="hidenosqlfields">
+                <div class=" row"
+                    *ngIf="selectedType == 'nosql' || selectedType == 'oracle' || selectedType == 'filesystem'">
                     <mat-form-field *ngIf="action != 'Delete';">
                         <mat-label>Port Number</mat-label>
                         <input matInput placeholder="Enter Port Number" formControlName='portnumber'
                             [(ngModel)]="local_data.portnumber">
-                        <mat-error
+                        <!-- <mat-error
                             *ngIf="datapointform.controls['portnumber'].invalid && (datapointform.controls['portnumber'].dirty || datapointform.controls['portnumber'].touched)"
                             class="red">
                             <div *ngIf="datapointform.controls['portnumber'].errors.required">
                                 Port Number is Required.
                             </div>
-                        </mat-error>
+                        </mat-error> -->
                     </mat-form-field>
 
                 </div>
-                <div class=" row" *ngIf="hidenosqlfields">
+                <div class=" row"
+                    *ngIf="selectedType == 'nosql' || selectedType == 'oracle' || selectedType == 'filesystem'">
                     <mat-form-field *ngIf="action != 'Delete';">
                         <mat-label>Ip Address</mat-label>
                         <input matInput placeholder="Enter Ip Address" formControlName='ipaddress'
                             [(ngModel)]="local_data.ipaddress">
-                        <mat-error
+                        <!-- <mat-error
                             *ngIf="datapointform.controls['ipaddress'].invalid && (datapointform.controls['ipaddress'].dirty || datapointform.controls['ipaddress'].touched)"
                             class="red">
                             <div *ngIf="datapointform.controls['ipaddress'].errors.required">
                                 Ip Address is Required.
                             </div>
-                        </mat-error>
+                        </mat-error> -->
                     </mat-form-field>
 
                 </div>
-                <div class=" row" *ngIf="hidenosqlfields">
+                <div class=" row" *ngIf="selectedType == 'nosql' || selectedType == 'oracle' ">
                     <mat-form-field *ngIf="action != 'Delete';">
                         <mat-label>Database Name</mat-label>
                         <input matInput placeholder="Enter Database Name" formControlName='database'
                             [(ngModel)]="local_data.database">
-                        <mat-error
+                        <!-- <mat-error
                             *ngIf="datapointform.controls['database'].invalid && (datapointform.controls['database'].dirty || datapointform.controls['database'].touched)"
                             class="red">
                             <div *ngIf="datapointform.controls['database'].errors.required">
                                 Database Name is Required.
                             </div>
-                        </mat-error>
+                        </mat-error> -->
                     </mat-form-field>
 
                 </div>
-                <div class=" row" *ngIf="hidenosqlfields">
+                <div class=" row" *ngIf="selectedType == 'nosql' || selectedType == 'oracle' ">
                     <mat-form-field *ngIf="action != 'Delete';">
                         <mat-label>User Name</mat-label>
                         <input matInput placeholder="Enter User Name" formControlName='username'
                             [(ngModel)]="local_data.username">
-                        <mat-error
+                        <!-- <mat-error
                             *ngIf="datapointform.controls['username'].invalid && (datapointform.controls['username'].dirty || datapointform.controls['username'].touched)"
                             class="red">
                             <div *ngIf="datapointform.controls['username'].errors.required">
                                 User Name is Required.
                             </div>
-                        </mat-error>
+                        </mat-error> -->
                     </mat-form-field>
 
                 </div>
-                <div class=" row" *ngIf="hidenosqlfields">
+                <div class=" row" *ngIf="selectedType == 'nosql' || selectedType == 'oracle'">
                     <mat-form-field *ngIf="action != 'Delete';">
                         <mat-label>Password</mat-label>
                         <input matInput placeholder="Enter Password" formControlName='password'
                             [(ngModel)]="local_data.password">
-                        <mat-error
+                        <!-- <mat-error
                             *ngIf="datapointform.controls['password'].invalid && (datapointform.controls['password'].dirty || datapointform.controls['password'].touched)"
                             class="red">
                             <div *ngIf="datapointform.controls['password'].errors.required">
                                 Password is Required.
                             </div>
-                        </mat-error>
+                        </mat-error> -->
                     </mat-form-field>
 
                 </div>
@@ -130,147 +143,41 @@
 
                 <!----oracle------->
 
-                <div class=" row" *ngIf="hideoraclefields">
-                    <mat-form-field *ngIf="action != 'Delete';">
-                        <mat-label>Port Number</mat-label>
-                        <input matInput placeholder="Enter Port Number" formControlName='portnumber'
-                            [(ngModel)]="local_data.portnumber">
-                        <mat-error
-                            *ngIf="datapointform.controls['portnumber'].invalid && (datapointform.controls['portnumber'].dirty || datapointform.controls['portnumber'].touched)"
-                            class="red">
-                            <div *ngIf="datapointform.controls['portnumber'].errors.required">
-                                Port Number is Required.
-                            </div>
-                        </mat-error>
-                    </mat-form-field>
-
-                </div>
-                <div class=" row" *ngIf="hideoraclefields">
-                    <mat-form-field *ngIf="action != 'Delete';">
-                        <mat-label>Ip Address</mat-label>
-                        <input matInput placeholder="Enter Ip Address" formControlName='ipaddress'
-                            [(ngModel)]="local_data.ipaddress">
-                        <mat-error
-                            *ngIf="datapointform.controls['ipaddress'].invalid && (datapointform.controls['ipaddress'].dirty || datapointform.controls['ipaddress'].touched)"
-                            class="red">
-                            <div *ngIf="datapointform.controls['ipaddress'].errors.required">
-                                Ip Address is Required.
-                            </div>
-                        </mat-error>
-                    </mat-form-field>
-
-                </div>
-                <div class=" row" *ngIf="hideoraclefields">
-                    <mat-form-field *ngIf="action != 'Delete';">
-                        <mat-label>Database Name</mat-label>
-                        <input matInput placeholder="Enter Database Name" formControlName='database'
-                            [(ngModel)]="local_data.database">
-                        <mat-error
-                            *ngIf="datapointform.controls['database'].invalid && (datapointform.controls['database'].dirty || datapointform.controls['database'].touched)"
-                            class="red">
-                            <div *ngIf="datapointform.controls['database'].errors.required">
-                                Database Name is Required.
-                            </div>
-                        </mat-error>
-                    </mat-form-field>
-
-                </div>
-                <div class=" row" *ngIf="hideoraclefields">
-                    <mat-form-field *ngIf="action != 'Delete';">
-                        <mat-label>User Name</mat-label>
-                        <input matInput placeholder="Enter User Name" formControlName='username'
-                            [(ngModel)]="local_data.username">
-                        <mat-error
-                            *ngIf="datapointform.controls['username'].invalid && (datapointform.controls['username'].dirty || datapointform.controls['username'].touched)"
-                            class="red">
-                            <div *ngIf="datapointform.controls['username'].errors.required">
-                                User Name is Required.
-                            </div>
-                        </mat-error>
-                    </mat-form-field>
-
-                </div>
-                <div class=" row" *ngIf="hideoraclefields">
-                    <mat-form-field *ngIf="action != 'Delete';">
-                        <mat-label>Password</mat-label>
-                        <input matInput placeholder="Enter Password" formControlName='password'
-                            [(ngModel)]="local_data.password">
-                        <mat-error
-                            *ngIf="datapointform.controls['password'].invalid && (datapointform.controls['password'].dirty || datapointform.controls['password'].touched)"
-                            class="red">
-                            <div *ngIf="datapointform.controls['password'].errors.required">
-                                Password is Required.
-                            </div>
-                        </mat-error>
-                    </mat-form-field>
-
-                </div>
-
                 <!----- End oracle--->
 
                 <!----file system------->
 
-                <div class=" row" *ngIf="hidefilesystem">
-                    <mat-form-field *ngIf="action != 'Delete';">
-                        <mat-label>Port Number</mat-label>
-                        <input matInput placeholder="Enter Port Number" formControlName='portnumber'
-                            [(ngModel)]="local_data.portnumber">
-                        <mat-error
-                            *ngIf="datapointform.controls['portnumber'].invalid && (datapointform.controls['portnumber'].dirty || datapointform.controls['portnumber'].touched)"
-                            class="red">
-                            <div *ngIf="datapointform.controls['portnumber'].errors.required">
-                                Port Number is Required.
-                            </div>
-                        </mat-error>
-                    </mat-form-field>
-
-                </div>
-                <div class=" row" *ngIf="hidefilesystem">
-                    <mat-form-field *ngIf="action != 'Delete';">
-                        <mat-label>Ip Address</mat-label>
-                        <input matInput placeholder="Enter Ip Address" formControlName='ipaddress'
-                            [(ngModel)]="local_data.ipaddress">
-                        <mat-error
-                            *ngIf="datapointform.controls['ipaddress'].invalid && (datapointform.controls['ipaddress'].dirty || datapointform.controls['ipaddress'].touched)"
-                            class="red">
-                            <div *ngIf="datapointform.controls['ipaddress'].errors.required">
-                                Ip Address is Required.
-                            </div>
-                        </mat-error>
-                    </mat-form-field>
-
-                </div>
-                <div class=" row" *ngIf="hidefilesystem">
+                <div class=" row" *ngIf="selectedType == 'filesystem' ">
                     <mat-form-field *ngIf="action != 'Delete';">
                         <mat-label>Path Name</mat-label>
                         <input matInput placeholder="Enter Path Name" formControlName='pathname'
                             [(ngModel)]="local_data.pathname">
-                        <mat-error
+                        <!-- <mat-error
                             *ngIf="datapointform.controls['pathname'].invalid && (datapointform.controls['pathname'].dirty || datapointform.controls['pathname'].touched)"
                             class="red">
                             <div *ngIf="datapointform.controls['pathname'].errors.required">
                                 Path Name is Required.
                             </div>
-                        </mat-error>
+                        </mat-error> -->
                     </mat-form-field>
 
                 </div>
-                <div class=" row" *ngIf="hidefilesystem">
+                <div class=" row" *ngIf="selectedType == 'filesystem' ">
                     <mat-form-field *ngIf="action != 'Delete';">
                         <mat-label>File Name</mat-label>
                         <input matInput placeholder="Enter File Name" formControlName='filename'
                             [(ngModel)]="local_data.filename">
-                        <mat-error
+                        <!-- <mat-error
                             *ngIf="datapointform.controls['filename'].invalid && (datapointform.controls['filename'].dirty || datapointform.controls['filename'].touched)"
                             class="red">
                             <div *ngIf="datapointform.controls['filename'].errors.required">
                                 File Name is Required.
                             </div>
-                        </mat-error>
+                        </mat-error> -->
                     </mat-form-field>
 
                 </div>
-                <div class=" row" *ngIf="hidefilesystem">
+                <!-- <div class=" row" >
 
                     <mat-form-field *ngIf="action != 'Delete';">
                         <mat-label>File Uplaod</mat-label>
@@ -279,7 +186,7 @@
                         <p-fileUpload name="myfile[]" customUpload="true" (uploadHandler)="myUploader($event)">
                         </p-fileUpload>
                     </mat-form-field>
-                </div>
+                </div> -->
 
                 <!----- End file system--->
 
@@ -288,8 +195,7 @@
 
 
 
-
-                <div class="row" *ngIf="hidefields">
+                <div class="row" *ngIf="selectedType == 'salesforce' ||  selectedType == 'sap'">
                     <mat-form-field *ngIf="action != 'Delete';">
                         <mat-label>Parameters</mat-label>
                         <textarea matInput placeholder="Enter Parameters.." formControlName='param'
@@ -304,7 +210,7 @@
                     </mat-form-field>
 
                 </div>
-                <div class=" row" *ngIf="hidefields">
+                <div class=" row" *ngIf="selectedType == 'salesforce' ||  selectedType == 'sap'">
                     <mat-form-field *ngIf="action != 'Delete';">
                         <mat-label>Authorization</mat-label>
                         <textarea matInput placeholder="Enter Authorization" formControlName='auth'
@@ -319,7 +225,7 @@
                     </mat-form-field>
 
                 </div>
-                <div class="row" *ngIf="hidefields">
+                <div class="row" *ngIf="selectedType == 'salesforce' ||  selectedType == 'sap'">
                     <mat-form-field *ngIf="action != 'Delete';">
                         <mat-label>Headers</mat-label>
                         <textarea matInput placeholder="Enter Headers" formControlName='headers'
@@ -334,7 +240,7 @@
                     </mat-form-field>
 
                 </div>
-                <div class=" row">
+                <div class=" row" *ngIf="selectedType == 'salesforce' ||  selectedType == 'sap'">
                     <mat-form-field *ngIf="action != 'Delete';">
                         <mat-label>URL<span class="astrick font-weight-bold">*</span>
                         </mat-label>

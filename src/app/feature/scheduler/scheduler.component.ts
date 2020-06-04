@@ -133,7 +133,7 @@ export class SchedulerComponent implements OnInit {
       if (res.data.length > 0) {
         res.data.forEach((element, index = 1) => {
 
-          let val = JSON.parse(element.Scheduleoptions);
+          let val = (element.Scheduleoptions);
 
           this.dataArray.push({
             id: (index + 1).toString(),

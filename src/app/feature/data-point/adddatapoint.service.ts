@@ -15,8 +15,20 @@ export class AdddatapointService {
   configUrl = ENV_CONFIG.API_URLS.DATA_CONNECTION;
 
   adddatapoints(data): Observable<any> {
+    console.log(data)
+    let newparams = {
+      "portnumber": data.portnumber,
+      "ipaddress": data.ipaddress,
+      "database": data.database,
+      "username": data.username,
+      "password": data.password,
+      "pathname": data.pathname,
+      "filename": data.filename,
+      "object": data.objectValue
+    };
 
     var formData: any = new FormData();
+
     formData.append("url", data.url);
     formData.append("name", data.name);
     formData.append("urldata", data.param);
@@ -29,7 +41,10 @@ export class AdddatapointService {
     formData.append("Auth", data.auth);
     formData.append("Type", data.type);
     formData.append("Header", data.headers);
+    formData.append("Data", JSON.stringify(newparams));
 
+
+    console.log(formData)
     return this.http
       .post(this.configUrl + '/datapointInsert', formData, {
         headers: new HttpHeaders(),
@@ -38,25 +53,28 @@ export class AdddatapointService {
   configUrlUpdate = "http://localhost/api-dataconnector/V1/dataconnectorApi/datapointUpdate";
 
   updatedatapoints(data): Observable<any> {
+    let newparams = {
+      "portnumber": data.portnumber,
+      "ipaddress": data.ipaddress,
+      "database": data.database,
+      "username": data.username,
+      "password": data.password,
+      "pathname": data.pathname,
+      "filename": data.filename,
+      "object": data.object
+    };
     var formData: any = new FormData();
     formData.append("url", data.url);
     formData.append("name", data.name);
-    console.log(data.param);
-
     formData.append("urldata", data.param);
-
     formData.append("method", 'post');
     formData.append("direction", data.InBound);
     formData.append("createdon", new Date().getTime());
     formData.append("updatedon", new Date().getTime());
     formData.append("scheduledon", new Date().getTime());
-    console.log(data.auth);
-
+    formData.append("Data", JSON.stringify(newparams));
     formData.append("Auth", data.auth);
-
     formData.append("Type", data.type);
-    console.log(data.headers);
-
     formData.append("Header", data.headers);
     formData.append("uniquid", data.uniqueId);
 
@@ -65,7 +83,7 @@ export class AdddatapointService {
 
     }).pipe(map(this.extractData), catchError(this.handleError))
   }
-  //configUrldelete = "http://localhost/api-dataconnector/V1/dataconnectorApi/deletedatapoint";
+  configUrldelete = "http://localhost/api-dataconnector/V1/dataconnectorApi/deletedatapoint";
 
   deletedatapoints(data): Observable<any> {
     var formData: any = new FormData();

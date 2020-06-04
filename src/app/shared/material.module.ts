@@ -13,6 +13,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 // import { MatListOption, MatListModule, MatSelectionList, MatSelectionListChange } from '@angular/material/list';
 import { FileUploadModule } from 'primeng/fileupload';
 
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 
 
@@ -48,7 +49,8 @@ import { FileUploadModule } from 'primeng/fileupload';
     MatToolbarModule,
     MatTabsModule,
     MatSortModule,
-    FileUploadModule
+    FileUploadModule,
+    DragDropModule
 
 
 
@@ -82,7 +84,8 @@ import { FileUploadModule } from 'primeng/fileupload';
     MatToolbarModule,
     MatTabsModule,
     MatSortModule,
-    FileUploadModule
+    FileUploadModule,
+    DragDropModule
 
 
   ]

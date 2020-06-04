@@ -1,10 +1,13 @@
-import { Component, OnInit, Input, Output, EventEmitter, Inject, Optional } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, Inject, Optional, SimpleChange, SimpleChanges, OnChanges } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { MAT_DIALOG_DATA } from '@angular/material';
 
 import { MatDialogRef } from '@angular/material/dialog';
 import { ValidationService } from 'src/app/shared/services/validation.service';
+import { AuthtokenService } from 'src/app/shared/services/authtoken.service';
+import { DataService } from 'src/app/shared/services/shared.service';
+import { SalesforceapiService } from 'src/app/shared/services/salesforceapi.service';
 
 export interface UsersData {
   name: string;
@@ -15,7 +18,7 @@ export interface UsersData {
   templateUrl: './popupdatapoint.component.html',
   styleUrls: ['./popupdatapoint.component.scss']
 })
-export class PopupdatapointComponent implements OnInit {
+export class PopupdatapointComponent implements OnInit, OnChanges {
 
 
   hidefields: boolean;
@@ -28,8 +31,15 @@ export class PopupdatapointComponent implements OnInit {
 
   action: string;
   local_data: any;
+  selectedType: string;
+  accessToken: any;
+  objectValue: any;
+
 
   constructor(private fb: FormBuilder, public dialogRef: MatDialogRef<PopupdatapointComponent>,
+    private authTokenService: AuthtokenService,
+    private sharedservice: DataService,
+    private Salesforceapiservice: SalesforceapiService,
 
     @Optional() @Inject(MAT_DIALOG_DATA) public data: UsersData, private validateservice: ValidationService) {
     this.local_data = { ...data };
@@ -40,16 +50,17 @@ export class PopupdatapointComponent implements OnInit {
       this.hideoraclefields = false;
       this.hidefilesystem = false;
     } else {
-      this.hidefields = true;
-      this.hidenosqlfields = true;
-      this.hideoraclefields = true;
-      this.hidefilesystem = true;
+      console.log("entered else block");
+      // this.onSelection();
     }
   }
 
   datapointform: FormGroup;
   datapointarray: Array<any> = [];
   ngOnInit() {
+    this.getAccessToken();
+
+
     this.datapointform = this.fb.group({
       name: ['', Validators.required],
 
@@ -59,23 +70,26 @@ export class PopupdatapointComponent implements OnInit {
       param: [],
       auth: [],
       headers: [],
+
       portnumber: [],
       ipaddress: [],
       database: [],
       username: [],
       password: [],
       pathname: [],
-      filename: []
-      // uplaodfile: []
+      filename: [],
+      // uplaodfile: [],
+      objectValue: []
     });
 
   }
   doAction() {
-
-
     if (this.action !== 'Delete') {
+      console.log(this.datapointform.invalid);
       if (!this.datapointform.invalid) {
+        localStorage.setItem('selectedval', this.datapointform.controls.objectValue.value)
         this.dialogRef.close({ event: this.action, data: this.local_data });
+
       } else {
         this.validateservice.markAllFormFieldsAsTouched(this.datapointform);
       }
@@ -87,32 +101,45 @@ export class PopupdatapointComponent implements OnInit {
   closeDialog() {
     this.dialogRef.close({ event: 'Cancel' });
   }
-  onSelection(e) {
-    let typevalues = this.datapointform.controls.type.value;
-    if (typevalues === "nosql") {
-      this.hidenosqlfields = true;
-      this.hidefields = false;
-      this.hideoraclefields = false;
-      this.hidefilesystem = false;
-    } else if (typevalues === "oracle") {
-      this.hideoraclefields = true;
-      this.hidefilesystem = false;
-      this.hidefields = false;
-      this.hidenosqlfields = false;
-    } else if (typevalues === "filesystem") {
-      this.hidefilesystem = true;
-      this.hidefields = false;
-      this.hidenosqlfields = false;
-      this.hideoraclefields = false;
-    } else if (typevalues === "salesforce" || typevalues === "sap") {
-      this.hidefields = true;
-      this.hidenosqlfields = false;
-      this.hideoraclefields = false;
-      this.hidefilesystem = false;
+
+  myUploader(event) {
+
+
+  }
+
+  getAccessToken() {
+    this.authTokenService.getToken().subscribe((res) => {
+      this.accessToken = res.access_token;
+      console.log(this.accessToken)
+      this.sharedservice.setAcessToken(this.accessToken);
+      this.getDataObjects();
+    }, (err) => {
+
+    })
+  }
+  getDataObjects() {
+    this.Salesforceapiservice.getDataObjectslist().subscribe((res) => {
+
+      this.objectValue = res;
+
+    }, (err) => {
+      console.log(err)
+    })
+  }
+  onChange(event) {
+    this.selectedType = event.value;
+    console.log(this.selectedType);
+    console.log(event.value);
+    if (this.selectedType === event.value) {
+      console.log("true");
+
+    } else {
+      console.log("false")
     }
   }
-  myUploader(event) {
-    //event.files == files to upload
+
+  ngOnChanges(changes: SimpleChanges) {
+    console.log(changes);
   }
 
 }

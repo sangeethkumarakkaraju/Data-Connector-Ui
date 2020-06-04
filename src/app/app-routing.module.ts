@@ -9,6 +9,7 @@ import { PopupdataConnection } from './feature/data-connection/popupdata-connect
 import { SchedulerComponent } from './feature/scheduler/scheduler.component';
 import { DataConnectionComponent } from './feature/data-connection/data-connection.component';
 import { JobhistoryComponent } from './feature/jobhistory/jobhistory.component';
+import { MappingComponent } from './feature/mapping/mapping.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
   },
   {
     path: 'data-connector', component: DataConnectionComponent,
+    data: { shownavbar: true }
+  },
+  {
+    path: 'mapping', component: MappingComponent,
     data: { shownavbar: true }
   },
   {

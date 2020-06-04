@@ -12,6 +12,9 @@ import { BehaviorSubject } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import { GetdatapointService } from './getdatapoint.service';
 import { AdddatapointService } from './adddatapoint.service';
+import { AuthtokenService } from 'src/app/shared/services/authtoken.service';
+import { DataService } from 'src/app/shared/services/shared.service';
+import { SalesforceapiService } from 'src/app/shared/services/salesforceapi.service';
 
 export interface PeriodicElement {
   id: any, name: string, InBound: string, url: string, param: string, auth: string, headers: string, type: string, createdby: string, createdon: any, updatedby: string, updatedon: any
@@ -54,6 +57,7 @@ export class DataPointComponent implements OnInit {
   currtentTime: Date;
   dataSubject = new BehaviorSubject<Element[]>([]);
   index: any;
+  objectValue: any;
   pipe: DatePipe;
   dateRange: boolean = false;
   filterForm = new FormGroup({
@@ -63,13 +67,16 @@ export class DataPointComponent implements OnInit {
     toDate1: new FormControl(),
   });
   dateRange1: boolean = false;
+  accessToken: any;
   get fromDate() { return this.filterForm.get('fromDate').value; }
   get toDate() { return this.filterForm.get('toDate').value; }
   get fromDate1() { return this.filterForm.get('fromDate1').value; }
   get toDate1() { return this.filterForm.get('toDate1').value; }
 
   constructor(private dialog: MatDialog, private getservice: GetdatapointService,
-    private adddatapointService: AdddatapointService) {
+
+    private adddatapointService: AdddatapointService,
+  ) {
     this.pipe = new DatePipe('en');
 
   }
@@ -79,6 +86,7 @@ export class DataPointComponent implements OnInit {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.getDataPoints();
+
   }
 
 
@@ -90,13 +98,19 @@ export class DataPointComponent implements OnInit {
       data: obj,
       disableClose: true,
       panelClass: 'my-dialog',
+
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result.event == 'Add') {
+        console.log("enter add");
 
         this.addRowData(result.data);
       } else if (result.event == 'Update') {
+
+        console.log("enter update");
+
+
         this.updateRowData(result.data);
       } else if (result.event == 'Delete') {
         this.deleteRowData(result.data);
@@ -106,7 +120,9 @@ export class DataPointComponent implements OnInit {
   }
   addRowData(row_obj) {
     this.adddatapointService.adddatapoints(row_obj).subscribe(
+
       (res) => {
+        console.log(res)
 
         this.getDataPoints();
 
@@ -120,9 +136,10 @@ export class DataPointComponent implements OnInit {
 
 
   updateRowData(row_obj) {
+
     this.dataArray.filter((value, key) => {
 
-
+      console.log(row_obj);
       if (value.uniqueId == row_obj.uniqueId) {
         this.adddatapointService.updatedatapoints(row_obj).subscribe(
           (res) => {
@@ -150,10 +167,27 @@ export class DataPointComponent implements OnInit {
   getDataPoints() {
     this.dataArray = [];
     this.getservice.getDatapoints().subscribe((res) => {
-      let index = 1;
+      console.log(res);
       if (res.data.length > 0) {
-        res.data.forEach((element, index) => {
+        res.data.forEach((element, index = 1) => {
+          console.log(element)
+          let val = (element.Data);
+
           this.dataArray.push({
+
+            portnumber: val['portnumber'],
+            ipaddress: val['ipaddress'],
+            database: val['database'],
+
+            username: val['username'],
+
+            password: val['password'],
+
+            pathname: val['pathname'],
+            filename: val['filename'],
+            objectValue: val['objectValue'],
+
+
             createdon: new Date(element.Created),
             createdby: 'sangeeth',
             name: element.Name,

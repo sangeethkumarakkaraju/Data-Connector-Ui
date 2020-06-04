@@ -17,6 +17,8 @@ import { DataConnectionComponent } from './feature/data-connection/data-connecti
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { PopupschedulerComponent } from './feature/scheduler/popupscheduler/popupscheduler.component';
 import { JobhistoryComponent } from './feature/jobhistory/jobhistory.component';
+import { MappingComponent } from './feature/mapping/mapping.component';
+import { DataComponent } from './feature/data/data.component';
 
 
 @NgModule({
@@ -29,7 +31,9 @@ import { JobhistoryComponent } from './feature/jobhistory/jobhistory.component';
     PopupdataConnection,
     DataPointComponent,
     PopupschedulerComponent,
-    JobhistoryComponent
+    JobhistoryComponent,
+    MappingComponent,
+    DataComponent
 
 
 
@@ -45,7 +49,8 @@ import { JobhistoryComponent } from './feature/jobhistory/jobhistory.component';
   entryComponents: [
     PopupdataConnection,
     PopupdatapointComponent,
-    PopupschedulerComponent
+    PopupschedulerComponent,
+
   ],
   providers: [DataConnectorService,
     {
